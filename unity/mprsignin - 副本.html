@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>签到</title>
+    <script src="../asset/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../asset/js/config.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=YrLXSmMEX8PpItoywaoeuXigcfKNuzoy"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+</head>
+<body style="color:#fff;background:rgba(0,0,0,0.5);max-width:640px;margin:0 auto;height:100%;">
+  <script type="text/javascript">
+      var geolocation = new BMap.Geolocation(),lng,lat;
+      geolocation.getCurrentPosition(function(r){
+         getLocation([r.longitude,r.latitude]);
+      });
+      function getLocation(xml){
+        $.ajax({
+            type:"GET",
+            url:"http://api.map.baidu.com/geosearch/v3/nearby?ak=YrLXSmMEX8PpItoywaoeuXigcfKNuzoy&geotable_id=182569&location="+ xml +"&tags=coffee&radius=10000&sortby=distance:-1",
+            dataType:"jsonp",
+            success:function(res){
+                postatch({address:res.contents[0].address,machineNumber:jzm.getQueryString('machinenumber'),userId:jzm.uncompilestr(_self.id.toString()),userToken:jzm.uncompilestr(_self.token)});
+            }
+        });
+      };
+      function postatch(xml){
+        $.ajax({
+            url: httpJoin + 'maintainer_inspect_sign',
+            type: 'POST',
+            dataType: 'json',
+            data: xml
+          })
+          .done(function(reg) {
+              document.write(JSON.stringify(reg));
+          })
+      }
+  </script>
+</body>
+</html>

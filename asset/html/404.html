@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>404</title>
+
+        <!-- CSS -->
+        <link href="http://39.108.88.107:8081/coffeeManagement/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://39.108.88.107:8081/coffeeManagement/css/style.css" rel="stylesheet">
+        <link href="http://39.108.88.107:8081/coffeeManagement/css/generics.css" rel="stylesheet">
+
+        <script type="text/javascript">
+          var jzm = {};
+          jzm.getQueryString = function(name)
+          {
+              var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+              var r = window.location.search.substr(1).match(reg);
+              if (r != null) return unescape(r[2]);
+              return null;
+          }
+        </script>
+    </head>
+    <body id="skin-cloth">
+        <section id="error-page" class="tile">
+            <h1 class="m-b-10">ERROR 404</h1>
+            <p>抱歉，页面无法访问...可能原因：网址有错误 > 请检查地址是否完整或存在多余字符；网址已失效 > 可能页面已删除，活动已下线，无权限操作等</p>
+            <a class="underline" href="javascript:void(0)"></a> <a class="underline" href="javascript:void(0);" onclick="window.location.href=jzm.getQueryString('uri') ? jzm.getQueryString('uri') : window.location.href" >返回</a>
+        </section>
+
+    </body>
+</html>
