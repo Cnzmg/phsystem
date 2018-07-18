@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
+  	<meta http-equiv="Pragma" content="no-cache" />
+
+  	<meta http-equiv="Expires" content="0" />
+
+	<link rel="stylesheet" href="../asset/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/base.css">
+	<link rel="stylesheet" href="../css/index.css">
+	<link rel="stylesheet" href="../css/fake.css">
+  	<!-- <script src="asset/js/jquery-3.2.1.min.js"></script> -->
+  	<!-- <script type="text/javascript" src="asset/js/config.js"></script> -->
+	
+	<!-- <script type="text/javascript" src="js/ui.js"></script> -->
+  <title>首页</title>
+</head>
+<body>
+<body>
+	<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="footer-banner">
+					
+			</div>
+			<div class="header-date">
+				<div class="date">
+					<ul>
+						<li>
+							<span>
+								起始日期
+							</span>
+							<form action="JavaScript:dateSearch()">
+								<input type="text" id="startTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(1)">
+								<span></span>
+							</form>
+						</li>
+						<li>
+							<span>
+								截止日期
+							</span>
+							<form action="JavaScript:dateSearch()">
+								<input type="text" id="endTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(1)">
+								<span></span>
+							</form>
+						</li>
+					</ul>
+					<!-- <li style="position:absolute; z-index:99; width:32px; height:10px;">
+							<button onclick="jzm.dateSearch()">搜索</button>
+					</li> -->
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="benner-box">
+					<ul class="benner-header">
+							<a href="#">
+								<li>
+									
+										<span></span>
+										<h4>统计</h4>
+									
+								</li>
+								<li>
+									<!-- <a href="./maintenance_center.html"> -->
+										<!-- <h4>运维中心</h4> -->
+										<span></span>
+									<!-- </a> -->
+								</li>
+							</a>
+						</ul>
+						<ul class="benner-footer">
+							<a href="#">
+							<li>
+							<h4>销售额
+							</h4>
+							<div></div>
+							<div id="money-msg">88852</div>
+							<em>单位：元</em>
+							</li>
+							<li>
+							<h4>销售杯数
+							</h4>
+							<div></div>
+							<div id="cup-msg">888</div>
+							<em>单位：杯</em>
+							</li>
+							</a>
+						</ul>
+					<!-- </a> -->
+				</div>	
+				<div class="content">
+					<ul class="content-box">
+						<div>
+							<li>
+							<a href="./atack.html">
+								<div>
+									<div></div>
+									<ul>
+										<li>
+											<div>
+												<h2 id="number_of_machines"><span>888</span></h2>
+											</div>
+										</li>
+										<li>
+											机器数量
+										</li>
+									</ul>
+								</div>
+							</a>
+						</li>
+						<li class="faults">
+							<a>
+								<div>
+									<div></div>
+									<ul>
+										<li>
+											<div>
+												<h2 id="Number_of_faults"><span>0</span></h2>
+											</div>
+										</li>
+										<li>
+											故障数量
+										</li>
+									</ul>
+								</div>
+								
+							</a>
+						</li>
+						<li class="off-line">
+							<a>
+								<div>
+									<div></div>
+									<ul>
+										<li>
+											<div>
+												<h2 id="off_line_number"><span>0</span></h2>
+											</div>
+										</li>
+										<li>
+											离线数量
+										</li>
+									</ul>	
+								</div>
+							</a>
+						</li>
+						<li class="quantity">
+							<a>
+								<div>
+									<div></div>
+									<ul>
+										<li>
+											<div>
+												<h2 id="lack_of_quantity"><span>0</span></h2>
+											</div>
+										</li>
+										<li>
+											缺料数量
+										</li>
+									</ul>
+								</div>
+							</a>
+						</li>
+						</div>
+					</ul>
+				</div>
+				<div class="footer-data">
+					<div class="footer-data-box">
+						<ul>
+							<li id="best">
+							<div style="background-color:#FC5B8F; color:#fff;">
+								<a>
+								<div>9985</div>
+								<div>No.100007</div>
+								</a>
+							</div>
+							<div style="background-color:#FC5B8F; color:#fff;">
+							<a>
+							<div>8888</div>
+							<div>No.100016</div>
+							</a>
+							</div>
+							<div style="background-color:#FC5B8F; color:#fff;">
+							<a>
+							<div>2236</div>
+							<div>No.100034</div>
+							</a>
+							</div>
+							</li>
+							<li id="worst">
+							<div style="background-color:#CAC9CA; color:#fff;">
+							<a>
+							<div>1000</div>
+							<div>No.100021</div>
+							</a>
+							</div>
+							<div style="background-color:#CAC9CA; color:#fff;">
+							<a>
+							<div>1230</div>
+							<div>No.100024</div>
+							</a>
+							</div>
+							<div style="background-color:#CAC9CA; color:#fff;">
+							<a>
+							<div>2333</div>
+							<div>No.100027</div>
+							</a>
+							</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+	<div class="fake">	
+		以上是演示数据
+	</div>
+</body>
+<script>
+</script>
+</html>

@@ -28,7 +28,7 @@ var Calendar = {
         this.isLeap();
     },
     // 判断平年还是闰年
-    isLeap:function() {
+    isLeap:function(){
         // alert('isLeap')
         var year = this._year;
         if (year % 4 == 0 && year % 100 > 0) {
@@ -99,7 +99,7 @@ var Calendar = {
         }
         str += '<h4><span class="previousMonth" onclick="MonthPage(1)">上月</span><span class="date">'+this._year+'年'+ this._month + '月</span><span class="nextMonth" onclick="MonthPage(2)">下月</span></h4>';//标题
         str += '<table class="sign_tab" border="0px" cellpadding="0px" cellspacing="0px">';
-        str += '<thread><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thread>';
+        str += '<thread><tr><th>周日</th><th>周一</th><th>周二</th><th>周三</th><th>周四</th><th>周五</th><th>周六</th></tr></thread>';
         str += '<tbody id="sign_tab" >';
         for (var k = 0; k < 6; k++) {
             if (k == 5 && arr[k][0] == "")
@@ -126,9 +126,10 @@ var Calendar = {
         }
         str += '</tbody>';
         str += '</table>';
-        
+        if(this._month==month&&this._year==year){
+            str += '<div class="sign-in" onclick="sign()">立即签到</div>';
+        }
         $("#box").html(str);
-        // return str;
     },
     nextMonth : function() {
         // alert('nextMonth')

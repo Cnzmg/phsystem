@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
+  	<meta http-equiv="Pragma" content="no-cache" />
+
+  	<meta http-equiv="Expires" content="0" />
+
+	<link rel="stylesheet" href="asset/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./css/base.css">
+	<link rel="stylesheet" href="./css/style.css">
+  	<script src="asset/js/jquery-3.2.1.min.js"></script>
+  	<script type="text/javascript" src="asset/js/config.js"></script>
+	<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="js/ui.js"></script>
+  <title>运维中心</title>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="message">
+				
+				<div id="tag">
+					
+				</div>
+				<!-- <label id="search">
+					<input type="text" value="" placeholder="请输入商户名或商户ID">
+				</label> -->
+			</div>
+			<div class="col-lg-12">
+				<form action="javascript:jzm.search()" class="search">
+					<label id="search">
+						<span>
+							
+						</span>
+						<input type="search" placeholder="输入商户名或商户ID快速查找">
+					<!-- 	<button id="search-btn">
+							
+						</button> -->
+					</label>
+				</form>
+				<div class="header-date">
+				<div class="date">
+					<ul>
+						<li>
+							<span>
+								起始日期
+							</span>
+							<form action="JavaScript:dateSearch()">
+								<input type="text" id="startTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(0)">
+								<span></span>
+							</form>
+						</li>
+						<li>
+							<span>
+								截止日期
+							</span>
+							<form action="JavaScript:dateSearch()">
+								<input type="text" id="endTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(0)">
+								<span></span>
+							</form>
+						</li>
+					</ul>
+				</div>
+				<div class="date-btn" onclick="date_Search()">
+					<button class="all index">全部</button>
+					<button class="this-m">本月</button>
+					<button class="this-k">本周</button>
+					<button class="today">今天</button>
+				</div>
+			</div>
+				<div class="list">
+					<div id="shop-list">
+						
+					</div>
+				</div>
+
+			</div>
+			<div id="machine-info">
+				<!-- <a href="./atack.html">
+					机器信息
+					<span></span>
+				</a> -->
+
+			</div>
+		</div>
+	</div>
+	<!-- 底部更多数据的箭头 -->
+	<footer>
+		<div></div>
+	</footer>
+	<script type="text/javascript" src="js/base.js"></script>
+	<script type="text/javascript">
+			// alert('首页')
+			jzm.paraMessage('toList');
+	</script>
+</body>
+</html>

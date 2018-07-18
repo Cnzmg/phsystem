@@ -1,0 +1,119 @@
+/*机器管理页面样式*/
+/*.message{
+	width:92%;
+	height:4.1rem;
+	margin:0 auto;
+	line-height:4.1rem;
+	font-size:1.3rem;
+	font-family:思源黑体 CN;
+}*/
+.tag{
+	width:100%;
+}
+.tag>span{
+	display:inline-block;
+	width:25%;
+	/*text-align:center;*/
+	color:#333333;
+	font-family:思源黑体 CN;
+
+}
+#list>div:nth-of-type(odd){
+	background-color:#DCEBFC;
+}
+#list>div>ul{
+	width:95%;
+	padding:0;
+	margin:0 auto;
+	padding:9px 0;
+}
+#list>div>ul>li{
+	width:100%;
+	margin:0.3rem 0;
+	padding-left:1.5rem;
+	font-size:12px;
+}
+#list>div>ul>li:first-of-type{
+	font-size:14px;
+	font-weight:bold;
+	padding-left:0;
+}
+#list>div>ul>li>span:last-of-type{
+	margin:0;
+}
+#list>div>ul>.state>span{
+	display:inline-block;
+	/*margin:0 16% 0 0;*/
+	padding:0;
+	font-size:12px;
+	/*width:33.3%;*/
+}
+.last_a{
+	overflow: hidden;
+	zoom:1;
+	background:url(../images/ps/14.png) no-repeat left 0px;
+	background-size:15px 18px;
+}
+.last_a>a{
+	display:block;
+	width:50%;
+	height:1.8rem;
+	line-height:1.8rem;
+	float:left;
+}
+.last_a>a:nth-of-type(1){
+
+	/*text-align:left;*/
+}
+.last_a>a:nth-of-type(2){
+	text-align:right;
+	padding-right:2rem;
+	background:url(../images/ps/13.png) no-repeat right center;
+	background-size:15px 12px;
+}
+/*分页按钮样式*/
+.pading{
+    margin: 0 auto;
+    width: 95%;
+    height: 38px;
+    /*line-height: 3rem;*/
+    text-align: center;
+    /*display:none;*/
+    /* border: 1px solid; */
+}
+.pading>button{
+	/*width:30px;*/
+	/*height:30px;*/
+	padding:5px 1px;
+}
+/*上一页*/
+.pading>button:nth-of-type(1) {
+    float: left;
+}
+/*下一页*/
+.pading>button:nth-of-type(2) {
+	/*background:url(../images/7.png) no-repeat 0px 0px;*/
+	/*background-size:cover;*/
+    float: right;
+}
+/*页数按钮*/
+.btn-num {
+    width: 63%;
+    height: 38px;
+    margin: 0 auto;
+    /*text-align:center;*/
+    /*border: 1px solid;*/
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    cursor: pointer;
+ }
+ .btn-num>button{
+ 	display:inline-block;
+	padding:5px 10px;
+	margin: 0 1px; 
+ }
+ .btn{
+ 	background:#ccc;
+ }
+

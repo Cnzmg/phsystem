@@ -1,0 +1,24 @@
+/*机器状态信息页面样式*/
+#list{
+	width:100%;
+	margin:0 auto;
+}
+#list>li:nth-of-type(odd){
+	background-color:#DCEBFC;
+}
+#list>li>div{
+	padding: 5px 0;
+}
+#list>li>div>div:nth-of-type(1){
+	padding:0;
+}
+#list>li>div>div{
+	width:92%;
+	margin:5px auto;
+	padding-left:10px;
+	font-size:13px;
+	font-family:思源黑体;
+}
+.version{
+	float:right;
+}

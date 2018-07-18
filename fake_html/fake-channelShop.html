@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
+  	<meta http-equiv="Pragma" content="no-cache" />
+
+  	<meta http-equiv="Expires" content="0" />
+
+	<link rel="stylesheet" href="../asset/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/base.css">
+	<link rel="stylesheet" href="../css/index.css">
+	<link rel="stylesheet" href="../css/fake.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/scale.css" type="text/css" />
+	<title>合作加盟</title>
+</head>
+<body> 
+	
+	<div class="container-fluid">
+		<div class="list">
+		</div>
+		<section class="imgzoom_pack">
+	        <div class="imgzoom_x">X</div>
+	        <div class="imgzoom_img"><img src=""/></div>
+	    </section>
+	</div>
+	<script src="../asset/js/jquery-3.2.1.min.js"></script>
+	<script src="./js/scale.js"></script>
+	<script>
+		var str = '';
+		for(var i=1;i<32;i++){
+			str+='<div class="banner">'+
+				'<img src="../images/'+i+'.JPG" alt="">'+
+			'</div>'
+		}
+		$('.list').html(str)
+        document.addEventListener("DOMContentLoaded", function(event){
+            ImagesZoom.init({
+                "elem": ".list"
+            });
+        }, false);
+    </script>
+</body>
+</html>

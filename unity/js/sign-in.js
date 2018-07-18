@@ -3,8 +3,9 @@ var dayarr= "";
 var dataarr = [];
 var dataObj = {};
 var date = new Date();
-var currentdate =  date.getFullYear() + "-" + (date.getMonth() + 1)+'-'+date.getDate();
-var times = date.getFullYear() + "-" + (date.getMonth() + 1);
+var Month = date.getMonth()<10 ? '0'+(date.getMonth() + 1):(date.getMonth() + 1)
+// console.log(Month)
+var currentdate =  date.getFullYear() + "-" + Month+'-'+date.getDate();
 var geolocation = new BMap.Geolocation(),lng,lat;
   // console.log(currentdate)
   geolocation.getCurrentPosition(function(r){
@@ -13,6 +14,7 @@ var geolocation = new BMap.Geolocation(),lng,lat;
   });
 
 function getLocation(xml){
+    console.log(xml)
     $.ajax({
         type:"GET",
         url:"http://api.map.baidu.com/geosearch/v3/nearby?ak=YrLXSmMEX8PpItoywaoeuXigcfKNuzoy&geotable_id=182569&location="+ xml +"&tags=coffee&radius=10000&sortby=distance:-1",
@@ -43,11 +45,20 @@ function postatch(type,time){
         if(stateCode.test(reg.statusCode.status)){
             // alert(reg.statusCode.msg)
             // console.log(1)
-            dataarr=[];
-            signInArr=[];
-            Calendar.getCalendar(signInArr)
+            if(reg.statusCode.status==4444){
+                dataarr=[];
+                signInArr=[];
+                Calendar.getCalendar(signInArr)
+            }else{
+                 jzm.Error(reg);
+            }
         }else if(reg.statusCode.status==200){
             alert('签到失败'+reg.statusCode.msg)
+            // $('.sign-in').html('签到完成')
+        }else if(reg.statusCode.status==2061){
+            signInArr.push($('.cur_day').html())
+            $("#box").html(Calendar.getCalendar(signInArr));
+            $('.sign-in').html('签到完成');
         }else{
             dateReg(reg.list);
             function dateReg(arr){
@@ -58,23 +69,28 @@ function postatch(type,time){
                         dataarr.push(arr[i].split('-'))
                         signInArr.push(dataarr[i][2])
                     }
+                    // console.log(signInArr)
                     Calendar.getCalendar(signInArr)
                     Calendar.init(currentdate)
-                    // alert('签到成功')
+                    for(var i=0;i<arr.length;i++){
+                        if(arr[i]==currentdate){
+                            // console.log(1111)
+                            $('.sign-in').html('签到完成')
+                        }
+                    }
                     return true;
                 }
             }   
         }  
     })
     .fail(function(err) {
-        alert(err)
+        // alert(err)
+        jzm.Error(err);
         // console.log(err)
     })
 };
 // 签到的点击方法
 function sign(){
-    signInArr.push($('.cur_day').html())
-    $("#box").html(Calendar.getCalendar(signInArr));
     postatch(1,currentdate)
 }
 

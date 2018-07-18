@@ -12,6 +12,7 @@
 
 	<link rel="stylesheet" href="asset/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./css/base.css">
+	<link rel="stylesheet" href="./css/atack_message.css">
   <script src="asset/js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="asset/js/config.js"></script>
   <script type="text/javascript" src="js/base.js"></script>
@@ -20,15 +21,22 @@
 <body>
 		<div class="container-fluid">
 			<div class="row">
+					<div id="header">
+						<form action="javascript:jzm.machine_search()">机器编号：
+							<input type="search" placeholder="">
+							
+						</form>
+						<!-- <button onclick="jzm.num()" style="position:absolute; z-index:99;">搜索</button> -->
+					</div>
 					<div class="col-lg-12">
-							<div class="list">
-									<ul id="list">
-
-									</ul>
+						<div class="list">
+							<div id="list">
 							</div>
+						</div>
 					</div>
 			</div>
 		</div>
+	<script src="./js/ui.js"></script>
 <script type="text/javascript">
 	jzm.paraMessage('machinListMessage');
 </script>

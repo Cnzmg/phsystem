@@ -1,15 +1,16 @@
 //正式服
-// var httpJoin = "http://120.79.53.95:8080/";
-// var localURL = "http://39.108.88.107:8081/phsystem/";
+var httpJoin = "http://mapi.cbCoffee.cn/";
+var localURL = "http://admin.cbCoffee.cn/phsystem/";
+var wxUri = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx71c7dc4f5208bb07&redirect_uri='+ window.location.href.replace('admin','www') +'&response_type=code&scope=snsapi_userinfo&state=wx';
 //测试服
-var httpJoin = "http://test.cbCoffee.cn:8080/";
-var localURL = "http://test.cbCoffee.cn:8086/phsystem/";
-var wxUri = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx71c7dc4f5208bb07&redirect_uri=http://www.cbcoffee.cn/sharedcoffee/tran/transfer.html&response_type=code&scope=snsapi_userinfo&state=' + window.location.href;
+// var httpJoin = "http://test.cbCoffee.cn:8080/";
+// var localURL = "http://test.cbCoffee.cn:8086/phsystem/";
+// var wxUri = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx71c7dc4f5208bb07&redirect_uri=http://www.cbcoffee.cn/sharedcoffee/tran/transfer.html&response_type=code&scope=snsapi_userinfo&state=' + window.location.href.split('?')[0];
 
 //公用工具
 var jzm = new Object();
 var zmpaths,num = 0;
-var statusCode = "400|1004|1003|997|1005|999|2068|4444";
+var statusCode = "400|1004|1003|997|1005|999|2068";
 var stateCode = new RegExp(statusCode);
 jzm.paraMessage = function(msg,data){
   return new jzm[msg](data);
@@ -39,7 +40,7 @@ jzm.getQueryToken = function (){
     data:{code:jzm.getQueryString("code"),url:window.location.pathname.split('?')[0]}
   })
   .done(function(reg) {
-      stateCode.test(reg.statusCode.status) ? jzm.Error(reg) : sessionStorage.setItem("token",JSON.stringify({token:jzm.compilestr(reg.userToken),id:jzm.compilestr(reg.userId.toString()),uri:jzm.compilestr(window.location.pathname.split('?')[0])}));
+      stateCode.test(reg.statusCode.status) ? jzm.Error() : sessionStorage.setItem("token",JSON.stringify({token:jzm.compilestr(reg.userToken),id:jzm.compilestr(reg.userId.toString()),uri:jzm.compilestr(window.location.pathname.split('?')[0])}));
   })
   .fail(function(err) {
       jzm.Error(err);
@@ -47,13 +48,17 @@ jzm.getQueryToken = function (){
 
 };
 jzm.Error = function (err){   //错误信息
-    console.log(err);
-    document.write(err.statusCode.msg);
+	//alert(err.statusCode.msg);
     // mBox.open({
 	  //   content: '网络异常!',
 	  //   time: 3 //3秒后自动关闭
     // });
-    // err.statusCode.status == 4444 ? document.write(err.statusCode.msg) : window.location.href = "./asset/html/404.html?uri=" + encodeURI(window.location.href.split('?')[0]);
+    if(err.statusCode.status == 1005){
+    	window.location.href = "./fake_html/fake-index.html?uri=" + encodeURI(window.location.href.split('?')[0] + "&err_code=" + err.statusCode.status + "&err_msg=" +err.statusCode.msg);
+    }
+//  else{
+//  	alert("err_code：" + err.statusCode.status + "err_msg：" +err.statusCode.msg);
+//  }
 };
 sessionStorage.getItem("token") ? null : (!jzm.getQueryString("code") ? window.location.href = wxUri : jzm.getQueryToken());    //授权登陆
 var _self = JSON.parse(sessionStorage.getItem("token"));
