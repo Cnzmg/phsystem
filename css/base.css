@@ -18,6 +18,28 @@ li{
 body{
 	background-color: #F2F2F2;
 }
+#state-red{
+	display:block;
+	width:10px;
+	height:10px;
+	position: absolute;
+	top:50%;
+	left:59%;
+	transform:translate(-50%,-50%);
+	border-radius:50%;
+	background-color:red;
+}
+#state-green{
+	display:block;
+	width:10px;
+	height:10px;
+	position: absolute;
+	top:50%;
+	left:59%;
+	transform:translate(-50%,-50%);
+	border-radius:50%;
+	background-color:#2DCC70;
+}
 /*i6*/
 @media (min-width:361px) and (max-width:375px){
 	html{
@@ -26,17 +48,17 @@ body{
 	.tag>span{
 		font-size:14px;
 	}
-	#list>div>ul>.state>span{
+	#list>div>ul>ul>.state>span{
 	display:inline-block;
 	margin:0 12% 0 0;
 	padding:0;
 	font-size:12px;
 	/*width:33.3%;*/
 	}
-	#list>div>ul>.number>span{
+	#list>div>ul>ul>.number>span{
 	margin-right:8%;
 	}
-	#list>div>ul>.personnel>span{
+	#list>div>ul>ul>.personnel>span{
 		margin-right:16%;
 	}
 	#header>div{
@@ -59,17 +81,17 @@ body{
 	float:left;
 	margin-left:8px;
 	}
-	#list>div>ul>.state>span{
+	#list>div>ul>ul>.state>span{
 	display:inline-block;
 	margin:0 16% 0 0;
 	padding:0;
 	font-size:12px;
 	/*width:33.3%;*/
 	}
-	#list>div>ul>.number>span{
+	#list>div>ul>ul>.number>span{
 	margin-right:8%;
 	}
-	#list>div>ul>.personnel>span{
+	#list>div>ul>ul>.personnel>span{
 	margin-right:16%;
 	}
 	#header>div{
@@ -98,17 +120,17 @@ body{
 	.tag>span{
 		font-size:12px;
 	}
-	#list>div>ul>.state>span{
+	#list>div>ul>ul>.state>span{
 	display:inline-block;
-	margin:0 12% 0 0;
+	margin:0 10% 0 0;
 	padding:0;
 	font-size:12px;
 	/*width:33.3%;*/
 	}
-	#list>div>ul>.number>span{
+	#list>div>ul>ul>.number>span{
 	margin-right:4%;
 	}
-	#list>div>ul>.personnel>span{
+	#list>div>ul>ul>.personnel>span{
 		margin-right:13%;
 	}
 	#header>div{
@@ -129,17 +151,17 @@ body{
 	html{
 		font-size:15px;
 	}
-	#list>div>ul>.state>span{
+	#list>div>ul>ul>.state>span{
 		display:inline-block;
 		/*margin:0 20% 0 0;*/
 		padding:0;
 		font-size:12px;
 		width:33.3%;
 	}
-	#list>div>ul>.number>span{
+	#list>div>ul>ul>.number>span{
 	margin-right:8%;
 	}
-	#list>div>ul>.personnel>span{
+	#list>div>ul>ul>.personnel>span{
 		margin-right:16%;
 	}
 	#header>div{

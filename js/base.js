@@ -1,4 +1,3 @@
-// var shopList_arr = [];
 var toList = true;
 jzm.toList = function(startTimes,endTimes){    //管理员  渠道商
   if(toList){
@@ -14,26 +13,28 @@ jzm.toList = function(startTimes,endTimes){    //管理员  渠道商
       console.log(r.statusCode.status)
       // console.log(r.statusCode.status)
       if(stateCode.test(r.statusCode.status)){
+        console.log(r.statusCode.status)
         // console.log(111)
         if(window.location.pathname=='/phsystem/index.html'){
-            window.location.href = './fake_html/fake-index.html';
+            window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
             // jzm.Error(r)
         }else{
-          window.location.href = './fake_html/fake-channelShop.html';
+          window.location.href = './fake_html/fake-channelShop.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
           // window.location.pathname
         }
       }else if(r.statusCode.status==200){
         // console.log(111)
         if(window.location.pathname=='/phsystem/index.html'){
-            window.location.href = './fake_html/fake-index.html';
+            window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
         }else{
-          window.location.href = './fake_html/fake-channelShop.html';
+          window.location.href = './fake_html/fake-channelShop.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
           // window.location.pathname
         }
       }else{
+        console.log(window.location.pathname)
           console.log('111')
           $('#search').children('input').val('')
-          if(r.roleId!=3){
+          if(window.location.pathname!='/phsystem/channelShop.html'){
              $("#tag").html('<li><span>充值人数:<span>'+ (r.rechargeInfo ? r.rechargeInfo.peopleNum : 0) + '</span></span></li>'+
             '<li><span>充值总额:<span>'+ (r.rechargeInfo ? r.rechargeInfo.sumMoney : 0) +'</span></span></li>');
           }else{
@@ -74,8 +75,9 @@ jzm.toList = function(startTimes,endTimes){    //管理员  渠道商
                     '</ul></a></div>';
                }
             };
-            jzm.machinList(2,startTimes,endTimes)
-              
+            if(window.location.pathname!='/phsystem/channelShop.html'){
+              jzm.machinList(2,startTimes,endTimes)
+            }
             if(str==""){
               console.log('无此商户')
               $('.commercial-footer-data').remove()
@@ -110,7 +112,7 @@ jzm.toList = function(startTimes,endTimes){    //管理员  渠道商
 };
 //所有机器销售情况和商户机器销售情况
 var machineBest = true;
-jzm.machineBest = function(type,num,startTimes,endTimes){  //machine_best_or_worst
+jzm.machineBest = function(type,num,startTimes,endTimes){ 
     // alert('toList')
     // console.log(startTimes)
     // console.log(endTimes)
@@ -127,9 +129,9 @@ jzm.machineBest = function(type,num,startTimes,endTimes){  //machine_best_or_wor
           console.log(r.soldList)
         if(stateCode.test(r.statusCode.status)){
           // jzm.Error(r)
-          window.location.href = './fake_html/fake-index.html';
+          window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
         }else if(r.statusCode.status==200){
-           window.location.href = './fake_html/fake-index.html';
+           window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
          }else if(type==1){
           // console.log(r)
           var bestStr="",worst_str="",best_str="";
@@ -251,9 +253,6 @@ jzm.machinList = function(type,startTimes,endTimes){  //管理员  维修人员
     return false;
   }
   function paging(page){
-    // console.log(1)
-    // console.log(type)
-    // console.log(page)
     $.ajax({
       url:httpJoin + "phone_machine_info",
       type:"POST",
@@ -262,45 +261,64 @@ jzm.machinList = function(type,startTimes,endTimes){  //管理员  维修人员
       data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),startTime:startTimes||null,endTime:endTimes||null,type:jzm.getQueryString("type")||type,page:page,onlineStatus:jzm.getQueryString("val")||null,failureStatus:jzm.getQueryString("val1")||null,materialStatus:jzm.getQueryString("val2")||null}
     })
     .done(function(r) {
-      // console.log(1)
-      // console.log(r)
       // console.log(r.statusCode.status)
-      (stateCode.test(r.statusCode.status)&&type==1||r.statusCode.status==200&&type==1) ?  window.location.href = './fake_html/fake-atack.html' : (type == 1 ||jzm.getQueryString("type")==1 ? (function(){
-        // console.log(1)
+      (stateCode.test(r.statusCode.status)&&type==1||r.statusCode.status==200&&type==1) ?  window.location.href = './fake_html/fake-atack.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg : (type == 1 ||jzm.getQueryString("type")==1 ? (function(){
         // console.log(r.machineShowList)
-        var str = "",i = 0,btn_num="",strState="";
+        var str = "",i = 0,btn_num="",strState="",abnormal='',machineShowList=[];
         for(; i < r.machineShowList.length; i ++){
-          // console.log(r.machineShowList[i].onlineStatus=='无'||'正常')
-          if(r.machineShowList[i].onlineStatus=='无'||r.machineShowList[i].onlineStatus=='在线'){
-             strState+='<span>在线状态：<span style="color:#2DCC70;">'+ r.machineShowList[i].onlineStatus +'</span></span>';
-           }else{
-             strState +='<span>在线状态：<span style="color:red;">'+ r.machineShowList[i].onlineStatus +'</span></span>';
-           }
-           if(r.machineShowList[i].failureStatus=='无'||r.machineShowList[i].failureStatus=='正常'){
-             strState +='<span>故障状态：<span style="color:#2DCC70;">'+ r.machineShowList[i].failureStatus +'</span></span>';
-           }else{
-               strState +='<span>故障状态：<span style="color:red;">'+ r.machineShowList[i].failureStatus +'</span></span>';
-           }
-          if(r.machineShowList[i].materialStatus=='无'||r.machineShowList[i].materialStatus=='正常'){
-             strState +='<span>缺料状态：<span style="color:#2DCC70;">'+ r.machineShowList[i].materialStatus +'</span></span>';
+          if((r.machineShowList[i].failureStatus=='无'||r.machineShowList[i].failureStatus=='正常')&&(r.machineShowList[i].materialStatus=='无'||r.machineShowList[i].materialStatus=='正常')){
+            machineShowList.push(r.machineShowList[i])
           }else{
-             strState +='<span>缺料状态：<span style="color:red;">'+ r.machineShowList[i].materialStatus +'</span></span>';
+            machineShowList.unshift(r.machineShowList[i])
           }
-          str += '<div><ul><li>商户名：'+ r.machineShowList[i].adminName +'</li>'+
-                 '<li>机器地址：'+ r.machineShowList[i].machineAddrDesc +'</li>'+
-                 '<li class="number"><span>机器编号：<span style="font-weight:bold;">'+ r.machineShowList[i].machineNumber +'</span></span><span>SN号：<span style="font-weight:bold;">'+ r.machineShowList[i].machineSn +'</span></span></li>'+
-                 '<li class="state">'+strState+'</li>'+
-                 '<li class="personnel"><span>维护人员：<span style="color:blue;">'+ r.machineShowList[i].maintainerName +'</span></span><span>维护人员手机号：<span style="color:blue;">'+ r.machineShowList[i].maintainerPhone +'</span></span></li>'+
-                 '<li class="last_a">'+
-                    '<a href="./atack_info.html?machineNumber='+r.machineShowList[i].machineNumber +'">查看日志</a>'+
-                    '<a href="./atack_message.html?machineNumber='+r.machineShowList[i].machineNumber +'">详细查看</a>'+
-                 '</li>'+
-                 '</ul></div>';
-         strState = "";
+          // console.log(r.machineShowList)
         };
-
+        console.log(machineShowList)
+        for(var j=0;j<machineShowList.length;j++){
+          if((machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常')&&(machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常')){
+            abnormal = '<div id="state-green"></div>';
+          }else{
+            abnormal = '<div id="state-red"></div>'; 
+          }
+          if(machineShowList[j].onlineStatus=='无'||machineShowList[j].onlineStatus=='在线'){
+            console.log('在线状态：正常')
+             strState+='<span>在线状态：<span style="color:#2DCC70;">'+ machineShowList[j].onlineStatus +'</span></span>';
+             
+           }else{
+             console.log('在线状态：故障')
+             strState +='<span>在线状态：<span style="color:red;">'+ machineShowList[j].onlineStatus +'</span></span>';
+             
+           }
+           if(machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常'){
+            console.log('故障状态：正常')
+             strState +='<span>故障状态：<span style="color:#2DCC70;">'+ machineShowList[j].failureStatus +'</span></span>';
+           }else{
+              console.log('故障状态：故障')
+               strState +='<span>故障状态：<span style="color:red;">'+ machineShowList[j].failureStatus +'</span></span>';
+           }
+          if(machineShowList[j].materialStatus=='无'||machineShowList[j].materialStatus=='正常'){
+            console.log('缺料状态：正常')
+             strState +='<span>缺料状态：<span style="color:#2DCC70;">'+ machineShowList[j].materialStatus +'</span></span>';
+          }else{
+            console.log('缺料状态：故障')
+             strState +='<span>缺料状态：<span style="color:red;">'+ machineShowList[j].materialStatus +'</span></span>';
+          }
+          str += '<div><ul><li onclick="jzm.state('+j+')"><span>'+ machineShowList[j].adminName+'</span><span>'+machineShowList[j].machineNumber+'</span><span>'+ machineShowList[j].maintainerName+'</span><span>'+abnormal+'</span></li>'+
+                  '<ul id="state-box" index=0 style="display:none;">'+
+                    '<li>机器地址：'+ machineShowList[j].machineAddrDesc +'</li>'+
+                    '<li class="number"><span>机器编号：<span style="font-weight:bold;">'+ machineShowList[j].machineNumber +'</span></span><span>SN号：<span style="font-weight:bold;">'+ machineShowList[j].machineSn +'</span></span></li>'+
+                    '<li class="state">'+strState+'</li>'+
+                    '<li class="personnel"><span>维护人员：<span style="color:blue;">'+ machineShowList[j].maintainerName +'</span></span><span>维护人员手机号：<span style="color:blue;">'+ machineShowList[j].maintainerPhone +'</span></span></li>'+
+                    '<li class="last_a">'+
+                      '<a href="./atack_info.html?machineNumber='+machineShowList[j].machineNumber +'">查看日志</a>'+
+                      '<a href="./atack_message.html?machineNumber='+machineShowList[j].machineNumber +'">详细查看</a>'+
+                    '</li>'+
+                  '</ul>'+
+                  '</ul></div>';
+         strState = "";
+         abnormal = "";
+        } 
         $("#list").html(str || "无");
-
         if(r.pageCount>1){
            $('.pading').html('<button>上一页</button><ul class="btn-num"></ul><button>下一页</button>')
             for(var j=0;j<r.pageCount;j++){
@@ -344,7 +362,7 @@ jzm.machinList = function(type,startTimes,endTimes){  //管理员  维修人员
       })() : (function(){
         if(stateCode.test(r.statusCode.status)||r.statusCode.status==200){
           // console.log()
-          window.location.href = './fake_html/fake-index.html';
+          window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
 					//console.log(11111)
         }else{
           // 离线数量：
@@ -379,7 +397,7 @@ jzm.machinListInfo = function(){  //管理员 维修人员  设备状态详细�
   .done(function(r) {
     // console.log(r)
     // alert('machinListInfo')
-    (stateCode.test(r.statusCode.status)||r.statusCode.status==200) ?  window.location.href = './fake_html/fake-atack_info.html' : (function(){
+    (stateCode.test(r.statusCode.status)||r.statusCode.status==200) ?  window.location.href = './fake_html/fake-atack_info.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg : (function(){
       // jzm.machinList(1);
       // console.log(machineNumber)
       var str = "",strState="";
@@ -464,7 +482,7 @@ jzm.machinListMessage = function(){  //管理员 维修人员  设备故障详�
     // console.log(r)
     // console.log(r.list)
     // alert('machinListMessage')
-    (stateCode.test(r.statusCode.status)||r.statusCode.status==200) ? window.location.href = './fake_html/fake-atack_message.html' : (function(){
+    (stateCode.test(r.statusCode.status)||r.statusCode.status==200) ? window.location.href = './fake_html/fake-atack_message.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg : (function(){
       // console.log(r)
       var newArr=[];
       //处理数组
@@ -557,7 +575,8 @@ jzm.detailSold = function(startTimes,endTimes){
         // jzm.Error(r)
         // console.log(r)
       }else if(r.statusCode.status==200){
-         window.location.href = './fake_html/fake-index.html';
+        // console.log('jzm.detailSold'+r.statusCode)
+         window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
        }else{
         // console.log(r)
         var str="",productSold="";
@@ -565,17 +584,19 @@ jzm.detailSold = function(startTimes,endTimes){
          str += '<div><a><ul><li><span></span><div>'+ r.adminName +'  /  No.'+r.machineNumber+'</div><div>'+r.addrDesc+'</div></li>'+
                    '<li><div style="width:50%;"><div id="information-left"></div><span>'+r.countNum+'</span><span>销售杯数</span></div><div style="width:50%;"><span>'+r.payMoney+'</span><span>销售总额</span></div></li>'+
                 '</ul></a></div>';
-     	}
-     	for(var i=0;i<r.productSold.length;i++){
-        num+=r.productSold[i].countNum
-        if(r.productSold[r.productSold.length-1].countNum==r.productSold[i].countNum){
-          productSold+='<li class="last"><div><div>'+r.productSold[i].countNum+'</div><div>'+r.productSold[i].productName+'</div></div></li>'
-        }else if(r.productSold[0].countNum==r.productSold[i].countNum){
-          productSold+='<li class="first"><div><div>'+r.productSold[i].countNum+'</div><div>'+r.productSold[i].productName+'</div></div></li>'
-        }else{
-           productSold+='<li class="middle"><div><div>'+r.productSold[i].countNum+'</div><div>'+r.productSold[i].productName+'</div></div></li>'
-        }
-     	}
+       }
+       if(r.productSold!=null){
+        for(var i=0;i<r.productSold.length;i++){
+          num+=r.productSold[i].countNum
+          if(r.productSold[r.productSold.length-1].countNum==r.productSold[i].countNum){
+            productSold+='<li class="last"><div><div>'+r.productSold[i].countNum+'</div><div>'+r.productSold[i].productName+'</div></div></li>'
+          }else if(r.productSold[0].countNum==r.productSold[i].countNum){
+            productSold+='<li class="first"><div><div>'+r.productSold[i].countNum+'</div><div>'+r.productSold[i].productName+'</div></div></li>'
+          }else{
+             productSold+='<li class="middle"><div><div>'+r.productSold[i].countNum+'</div><div>'+r.productSold[i].productName+'</div></div></li>'
+          }
+         }
+       }
       // console.log(num)
      $('#information-list').html(str||"无")
      $('#information').html(productSold)

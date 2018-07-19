@@ -435,4 +435,17 @@ window.onload=function(){
 			$('.btn-num').children('button').eq(page-1).addClass('btn');
 		};
 	};
+
+	jzm.state = function(num){
+		console.log(num)
+		if($('#list').children('div').eq(num).children('ul').children('#state-box').attr('index') == 0){
+			$('#list').children('div').eq(num).children('ul').children('#state-box').show();
+			$('#list').children('div').eq(num).children('ul').children('#state-box').attr('index','1')
+		}else{
+			$('#list').children('div').eq(num).children('ul').children('#state-box').hide();
+			$('#list').children('div').eq(num).children('ul').children('#state-box').attr('index','0')
+		}
+		
+		// console.log($('#list').children('div').eq(num).children('ul').children('li').children('.state').attr('index'))
+	}
 };

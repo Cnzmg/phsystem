@@ -14,7 +14,6 @@ var geolocation = new BMap.Geolocation(),lng,lat;
   });
 
 function getLocation(xml){
-    console.log(xml)
     $.ajax({
         type:"GET",
         url:"http://api.map.baidu.com/geosearch/v3/nearby?ak=YrLXSmMEX8PpItoywaoeuXigcfKNuzoy&geotable_id=182569&location="+ xml +"&tags=coffee&radius=10000&sortby=distance:-1",

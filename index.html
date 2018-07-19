@@ -13,8 +13,7 @@
 	<link rel="stylesheet" href="asset/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./css/base.css">
 	<link rel="stylesheet" href="./css/index.css">
-	<script src="asset/js/jquery-3.2.1.min.js"></script>
-	<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  	<script src="asset/js/jquery-3.2.1.min.js"></script>
   	<script type="text/javascript" src="asset/js/config.js"></script>
 	<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
   <title>首页</title>
@@ -22,7 +21,8 @@
 <body>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="footer-banner">		
+			<div class="footer-banner">
+					
 			</div>
 			<div class="header-date">
 				<div class="date">
@@ -32,7 +32,7 @@
 								起始日期
 							</span>
 							<form action="JavaScript:dateSearch()">
-								<input type="text" id="startTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onfocus="dateSearch(1)">
+								<input type="text" id="startTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(1)">
 								<span></span>
 							</form>
 						</li>
@@ -41,7 +41,7 @@
 								截止日期
 							</span>
 							<form action="JavaScript:dateSearch()">
-								<input type="text" id="endTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onfocus="dateSearch(1)">
+								<input type="text" id="endTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(1)">
 								<span></span>
 							</form>
 						</li>
@@ -53,40 +53,42 @@
 			</div>
 			<div class="col-lg-12">
 				<div class="benner-box">
-					<ul class="benner-header">
-						<a href="./maintenance_center.html">
+					
+						<ul class="benner-header">
+							<a href="./maintenance_center.html">
+								<li>
+									
+										<span></span>
+										<h4>统计</h4>
+									
+								</li>
+								<li>
+									<!-- <a href="./maintenance_center.html"> -->
+										<!-- <h4>运维中心</h4> -->
+										<span></span>
+									<!-- </a> -->
+								</li>
+							</a>
+						</ul>
+						<ul class="benner-footer">
+							<a href="./maintenance_center.html">
 							<li>
-								
-									<span></span>
-									<h4>统计</h4>
-								
+							<h4>销售额
+							</h4>
+							<div></div>
+							<div id="money-msg"></div>
+							<em>单位：元</em>
 							</li>
 							<li>
-								<!-- <a href="./maintenance_center.html"> -->
-									<!-- <h4>运维中心</h4> -->
-									<span></span>
-								<!-- </a> -->
+							<h4>销售杯数
+							</h4>
+							<div></div>
+							<div id="cup-msg"></div>
+							<em>单位：杯</em>
 							</li>
-						</a>
-					</ul>
-					<ul class="benner-footer">
-						<a href="./maintenance_center.html">
-						<li>
-						<h4>销售额
-						</h4>
-						<div></div>
-						<div id="money-msg"></div>
-						<em>单位：元</em>
-						</li>
-						<li>
-						<h4>销售杯数
-						</h4>
-						<div></div>
-						<div id="cup-msg"></div>
-						<em>单位：杯</em>
-						</li>
-						</a>
-					</ul>
+							</a>
+						</ul>
+					
 				</div>	
 				<div class="content">
 					<ul class="content-box">
@@ -184,6 +186,7 @@
 			// alert('首页')
 			jzm.paraMessage('toList')
 			jzm.paraMessage('machineBest',1)
+			// jzm.paraMessage('machinList')
 	</script>
 </body>
 </html>
