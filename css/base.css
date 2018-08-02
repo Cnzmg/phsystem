@@ -40,6 +40,17 @@ body{
 	border-radius:50%;
 	background-color:#2DCC70;
 }
+#state-yellow{
+	display:block;
+	width:10px;
+	height:10px;
+	position: absolute;
+	top:50%;
+	left:59%;
+	transform:translate(-50%,-50%);
+	border-radius:50%;
+	background-color:#FFA500;
+}
 /*i6*/
 @media (min-width:361px) and (max-width:375px){
 	html{

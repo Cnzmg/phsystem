@@ -16,18 +16,18 @@ jzm.toList = function(startTimes,endTimes){    //管理员  渠道商
         console.log(r.statusCode.status)
         // console.log(111)
         if(window.location.pathname=='/phsystem/index.html'){
-            window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
+            // window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
             // jzm.Error(r)
         }else{
-          window.location.href = './fake_html/fake-channelShop.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
+          // window.location.href = './fake_html/fake-channelShop.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
           // window.location.pathname
         }
       }else if(r.statusCode.status==200){
         // console.log(111)
         if(window.location.pathname=='/phsystem/index.html'){
-            window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
+            // window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
         }else{
-          window.location.href = './fake_html/fake-channelShop.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
+          // window.location.href = './fake_html/fake-channelShop.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
           // window.location.pathname
         }
       }else{
@@ -129,9 +129,9 @@ jzm.machineBest = function(type,num,startTimes,endTimes){
           console.log(r.soldList)
         if(stateCode.test(r.statusCode.status)){
           // jzm.Error(r)
-          window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
+          // window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
         }else if(r.statusCode.status==200){
-           window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
+          //  window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
          }else if(type==1){
           // console.log(r)
           var bestStr="",worst_str="",best_str="";
@@ -264,29 +264,35 @@ jzm.machinList = function(type,startTimes,endTimes){  //管理员  维修人员
       // console.log(r.statusCode.status)
       (stateCode.test(r.statusCode.status)&&type==1||r.statusCode.status==200&&type==1) ?  window.location.href = './fake_html/fake-atack.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg : (type == 1 ||jzm.getQueryString("type")==1 ? (function(){
         // console.log(r.machineShowList)
-        var str = "",i = 0,btn_num="",strState="",abnormal='',machineShowList=[];
+        var str = "",i = 0,btn_num="",strState="",abnormal='',machineShowList=[],offLine=[];
         for(; i < r.machineShowList.length; i ++){
-          if((r.machineShowList[i].failureStatus=='无'||r.machineShowList[i].failureStatus=='正常')&&(r.machineShowList[i].materialStatus=='无'||r.machineShowList[i].materialStatus=='正常')){
+          if((r.machineShowList[i].onlineStatus=='无'||r.machineShowList[i].onlineStatus=='在线')&&(r.machineShowList[i].failureStatus=='无'||r.machineShowList[i].failureStatus=='正常')&&(r.machineShowList[i].materialStatus=='无'||r.machineShowList[i].materialStatus=='正常')){
             machineShowList.push(r.machineShowList[i])
+          }else if(r.machineShowList[i].onlineStatus=='离线'){
+            offLine.push(r.machineShowList[i])
           }else{
             machineShowList.unshift(r.machineShowList[i])
           }
           // console.log(r.machineShowList)
         };
+        for(var a = 0;a<offLine.length;a++){
+          machineShowList.push(offLine[a])
+        }
         console.log(machineShowList)
         for(var j=0;j<machineShowList.length;j++){
-          if((machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常')&&(machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常')){
+          if((machineShowList[j].onlineStatus=='无'||machineShowList[j].onlineStatus=='在线')&&(machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常')&&(machineShowList[j].materialStatus=='无'||machineShowList[j].materialStatus=='正常')){
             abnormal = '<div id="state-green"></div>';
+          }else if(machineShowList[j].onlineStatus=='离线'&&(machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常')&&(machineShowList[j].materialStatus=='无'||machineShowList[j].materialStatus=='正常')){
+            abnormal = '<div id="state-yellow"></div>'; 
           }else{
             abnormal = '<div id="state-red"></div>'; 
           }
           if(machineShowList[j].onlineStatus=='无'||machineShowList[j].onlineStatus=='在线'){
             console.log('在线状态：正常')
              strState+='<span>在线状态：<span style="color:#2DCC70;">'+ machineShowList[j].onlineStatus +'</span></span>';
-             
            }else{
              console.log('在线状态：故障')
-             strState +='<span>在线状态：<span style="color:red;">'+ machineShowList[j].onlineStatus +'</span></span>';
+             strState +='<span>在线状态：<span style="color:#FFA500;">'+ machineShowList[j].onlineStatus +'</span></span>';
              
            }
            if(machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常'){
@@ -362,7 +368,7 @@ jzm.machinList = function(type,startTimes,endTimes){  //管理员  维修人员
       })() : (function(){
         if(stateCode.test(r.statusCode.status)||r.statusCode.status==200){
           // console.log()
-          window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
+          // window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
 					//console.log(11111)
         }else{
           // 离线数量：
@@ -576,7 +582,7 @@ jzm.detailSold = function(startTimes,endTimes){
         // console.log(r)
       }else if(r.statusCode.status==200){
         // console.log('jzm.detailSold'+r.statusCode)
-         window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
+        //  window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
        }else{
         // console.log(r)
         var str="",productSold="";
