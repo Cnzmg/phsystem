@@ -15,7 +15,13 @@ ul,ol{
 li{
 	list-style-type:none;
 }
+html{
+	width:100%;
+	height:100%;
+}
 body{
+	width:100%;
+	height:100%;
 	background-color: #F2F2F2;
 }
 #state-red{
@@ -50,6 +56,17 @@ body{
 	transform:translate(-50%,-50%);
 	border-radius:50%;
 	background-color:#FFA500;
+}
+#state-gray{
+	display:block;
+	width:10px;
+	height:10px;
+	position: absolute;
+	top:50%;
+	left:59%;
+	transform:translate(-50%,-50%);
+	border-radius:50%;
+	background-color:#B8BAB9;
 }
 /*i6*/
 @media (min-width:361px) and (max-width:375px){
@@ -157,7 +174,6 @@ body{
 		height:19.8rem;
 	}
 }
-
 @media (min-width:415px) and (max-width:1024px){
 	html{
 		font-size:15px;
@@ -426,3 +442,16 @@ body{
 		font-weight:bold;
 	}
 }
+.loading_box{
+	width:100%;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	z-index:9999;
+	display:none;
+}
+.load8{
+	text-align:center;
+}
+

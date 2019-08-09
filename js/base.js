@@ -1,614 +1,748 @@
 var toList = true;
-jzm.toList = function(startTimes,endTimes){    //管理员  渠道商
-  if(toList){
+jzm.toList = function (startTimes, endTimes) { //管理员  渠道商
+  console.log('toList')
+  if (toList) {
     toList = false;
     $.ajax({
-      url:httpJoin + "phone_operation_report",
-      type:"POST",
-      async:true,
-      dataType:"JSON",
-      data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),startTime:startTimes||null,endTime:endTimes||null,name:jzm.getQueryString('name')}
+      url: httpJoin + "phone_operation_report",
+      type: "POST",
+      async: true,
+      dataType: "JSON",
+      // data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),startTime:startTimes||null,endTime:endTimes||null,name:jzm.getQueryString('name')}
+      data: { idKey: _self.idKey, url: jzm.uncompilestr(_self.uri), startTime: startTimes || null, endTime: endTimes || null, name: jzm.getQueryString('name'), loginType: _self.loginType }
     })
-    .done(function(r){
-      console.log(r.statusCode.status)
-      // console.log(r.statusCode.status)
-      if(stateCode.test(r.statusCode.status)){
+      .done(function (r) {
         console.log(r.statusCode.status)
-        // console.log(111)
-        if(window.location.pathname=='/phsystem/index.html'){
-            // window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
+        // console.log(r.statusCode.status)
+        if (stateCode.test(r.statusCode.status)) {
+          console.log(r.statusCode.status)
+          // console.log(111)
+          if (window.location.pathname == '/phsystem/index.html') {
+            window.location.href = './fake_html/fake-index.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg;
             // jzm.Error(r)
-        }else{
-          // window.location.href = './fake_html/fake-channelShop.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
-          // window.location.pathname
-        }
-      }else if(r.statusCode.status==200){
-        // console.log(111)
-        if(window.location.pathname=='/phsystem/index.html'){
-            // window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
-        }else{
-          // window.location.href = './fake_html/fake-channelShop.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
-          // window.location.pathname
-        }
-      }else{
-        console.log(window.location.pathname)
+          } else {
+            window.location.href = './fake_html/fake-channelShop.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg;
+            // window.location.pathname
+          }
+        } else if (r.statusCode.status == 200) {
+          // console.log(111)
+          if (window.location.pathname == '/phsystem/index.html') {
+            window.location.href = './fake_html/fake-index.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg;
+          } else {
+            window.location.href = './fake_html/fake-channelShop.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg;
+            // window.location.pathname
+          }
+        } else {
+          console.log(window.location.pathname)
           console.log('111')
           $('#search').children('input').val('')
-          if(window.location.pathname!='/phsystem/channelShop.html'){
-             $("#tag").html('<li><span>充值人数:<span>'+ (r.rechargeInfo ? r.rechargeInfo.peopleNum : 0) + '</span></span></li>'+
-            '<li><span>充值总额:<span>'+ (r.rechargeInfo ? r.rechargeInfo.sumMoney : 0) +'</span></span></li>');
-          }else{
+          if (window.location.pathname != '/phsystem/channelShop.html') {
+            $("#tag").html('<li><span>充值人数:<span>' + (r.rechargeInfo ? r.rechargeInfo.peopleNum : 0) + '</span></span></li>' +
+              '<li><span>充值总额:<span>' + (r.rechargeInfo ? r.rechargeInfo.sumMoney : 0) + '</span></span></li>');
+          } else {
             $('.message').remove();
             // console.log()
-             $('.benner-header').children('a').attr('href','./commercial.html?val='+r.shopList[0].adminID);
-             $('.benner-footer').children('a').attr('href','./commercial.html?val='+r.shopList[0].adminID);
+            $('.benner-header').children('a').attr('href', './commercial.html?val=' + r.shopList[0].adminID);
+            $('.benner-footer').children('a').attr('href', './commercial.html?val=' + r.shopList[0].adminID);
           }
-        data(r. shopList)
-        function data(shopList){
-          // console.log(shopList)
-          if(shopList!=null){
-            // console.log(2222)
-            // console.log($('#search').children('input').val())
-            var str = "",str_c="",i = 0,payCount_Num=0,payMoney_Num=0,bestStr="",worstStr="";
-            for(; i < shopList.length; i ++){
-              // 销售总杯数
-              payCount_Num+=shopList[i].payCount;
-              // 销售额
-              payMoney_Num+=Math.ceil(shopList[i].payMoney);
-              // shopList_arr.push(shopList[i])
-              // console.log(jzm.getQueryString('val'))
-              if(shopList.length==1&&window.location.pathname=='/phsystem/maintenance_center.html'){
-                $('.message').remove();
-                // console.log(111111111111111)
-                  jzm.machineBest(2,shopList[i].adminID,startTimes,endTimes)
-              }   
-               if($('#search').children('input').val()==shopList[i].adminName||$('#search').children('input').val()==shopList[i].adminID||jzm.getQueryString('val')==shopList[i].adminID){
-                 // console.log(11111)
-                str += '<div><a href="./commercial.html?val='+shopList[i].adminID+'&name='+shopList[i].adminName+'&machineCount='+shopList[i].machineCount+'&payCount='+shopList[i].payCount+'&payMoney='+shopList[i]. payMoney+'"><ul ><li><span></span><div>'+ shopList[i].adminName +'</div></li>'+
-                       '<li><div style="width:33.3%;"><span id="machineCount-num">'+ shopList[i].machineCount +'</span><span>机器数量</span></div><div style="width:33.3%;"><div id="machineCount-left"></div><span>'+shopList[i].payCount+'</span><span>销售杯数</span></div><div style="width:33.3%;"><span>'+shopList[i]. payMoney+'</span><span>销售总额</span></div></li>'+
-                      '</ul></a></div>';
-                  
-              // console.log(str)
-               }else if(!$('#search').children('input').val()&&jzm.getQueryString('val')==null){
-                str += '<div><a href="./commercial.html?val='+shopList[i].adminID+'&name='+shopList[i].adminName+'&machineCount='+shopList[i].machineCount+'&payCount='+shopList[i].payCount+'&payMoney='+shopList[i]. payMoney+'"><ul ><li><span></span><div>'+ shopList[i].adminName +'</div></li>'+
-                     '<li><div style="width:33.3%;"><span>'+ shopList[i].machineCount +'</span><span>机器数量</span></div><div style="width:33.3%;"><div id="machineCount-left"></div><span>'+shopList[i].payCount+'</span><span>销售杯数</span></div><div style="width:33.3%;"><span>'+shopList[i]. payMoney+'</span><span>销售总额</span></div></li>'+
+          data(r.shopList)
+          function data(shopList) {
+            // console.log('科学计数', Number(3.4556645445E7))
+            if (shopList != null) {
+              // console.log(2222)
+              // console.log($('#search').children('input').val())
+              var str = "", str_c = "", i = 0, payCount_Num = 0, payMoney_Num = 0, bestStr = "", worstStr = "";
+              for (; i < shopList.length; i++) {
+                // 销售总杯数
+                payCount_Num += shopList[i].payCount;
+                // 销售额
+                payMoney_Num += shopList[i].payMoney;
+                // payMoney_Num += Math.floor(shopList[i].payMoney * 10) / 10;
+                // shopList_arr.push(shopList[i])
+                // console.log(jzm.getQueryString('val'))
+                if (shopList.length == 1 && window.location.pathname == '/phsystem/maintenance_center.html') {
+                  $('.message').remove();
+                  // console.log(111111111111111)
+                  jzm.machineBest(2, shopList[i].adminID, startTimes, endTimes)
+                }
+
+                if ($('#search').children('input').val() == shopList[i].adminName || $('#search').children('input').val() == shopList[i].adminID || jzm.getQueryString('val') == shopList[i].adminID) {
+                  console.log(11111)
+                  str += '<div><a href="./commercial.html?val=' + shopList[i].adminID + '&name=' + shopList[i].adminName + '&machineCount=' + shopList[i].machineCount + '&payCount=' + shopList[i].payCount + '&payMoney=' + shopList[i].payMoney + '"><ul ><li><div><span></span><div class="realName">' + shopList[i].realName + '</div><div>' + shopList[i].adminName + '</div></div></li>' +
+                    '<li><div style="width:33.3%;"><span id="machineCount-num">' + shopList[i].machineCount + '</span><span>机器数量</span></div><div style="width:33.3%;"><div id="machineCount-left"></div><span>' + shopList[i].payCount + '</span><span>销售杯数</span></div><div style="width:33.3%;"><span>' + shopList[i].payMoney + '</span><span>销售总额</span></div></li>' +
                     '</ul></a></div>';
-               }
-            };
-            if(window.location.pathname!='/phsystem/channelShop.html'){
-              jzm.machinList(2,startTimes,endTimes)
-            }
-            if(str==""){
-              console.log('无此商户')
-              $('.commercial-footer-data').remove()
-              str = '<div><a href="#"><ul ><li><span></span><div>无此商户</div></li>'+
-                 '<li><div style="width:33.3%;"><span id="machineCount-num">0</span><span>机器数量</span></div><div style="width:33.3%;"><div id="machineCount-left"></div><span>0</span><span>销售杯数</span></div><div style="width:33.3%;"><span>0.00</span><span>销售总额</span></div></li>'+
-                '</ul></a></div>';
-            }
-          }else{
+                  // console.log(str)
+                } else if (!$('#search').children('input').val() && jzm.getQueryString('val') == null) {
+                  str += '<div><a href="./commercial.html?val=' + shopList[i].adminID + '&name=' + shopList[i].adminName + '&machineCount=' + shopList[i].machineCount + '&payCount=' + shopList[i].payCount + '&payMoney=' + shopList[i].payMoney + '"><ul ><li><div><span></span><div class="realName">' + shopList[i].realName + '</div><div>' + shopList[i].adminName + '</div></div></li>' +
+                    '<li><div style="width:33.3%;"><span>' + shopList[i].machineCount + '</span><span>机器数量</span></div><div style="width:33.3%;"><div id="machineCount-left"></div><span>' + shopList[i].payCount + '</span><span>销售杯数</span></div><div style="width:33.3%;"><span>' + shopList[i].payMoney + '</span><span>销售总额</span></div></li>' +
+                    '</ul></a></div>';
+                }
+              };
+              payMoney_Num = Math.floor(payMoney_Num * 10) / 10;
+              console.log(payMoney_Num)
+              if (window.location.pathname != '/phsystem/channelShop.html') {
+                console.log(1111111)
+                jzm.machinList(2, startTimes, endTimes)
+              };
+              if (str == "") {
+                console.log('无此商户')
+                $('.commercial-footer-data').remove()
+                str = '<div><a href="#"><ul ><li><span></span><div>无此商户</div></li>' +
+                  '<li><div style="width:33.3%;"><span id="machineCount-num">0</span><span>机器数量</span></div><div style="width:33.3%;"><div id="machineCount-left"></div><span>0</span><span>销售杯数</span></div><div style="width:33.3%;"><span>0.00</span><span>销售总额</span></div></li>' +
+                  '</ul></a></div>';
+              }
+            } else {
               console.log('无此商户')
               $('.message').remove();
-              str = '<div><a href="#"><ul ><li><span></span><div>无此商户</div></li>'+
-                   '<li><div style="width:33.3%;"><span id="machineCount-num">0</span><span>机器数量</span></div><div style="width:33.3%;"><div id="machineCount-left"></div><span>0</span><span>销售杯数</span></div><div style="width:33.3%;"><span>0.00</span><span>销售总额</span></div></li>'+
-                  '</ul></a></div>';
+              str = '<div><a href="#"><ul ><li><span></span><div>无此商户</div></li>' +
+                '<li><div style="width:33.3%;"><span id="machineCount-num">0</span><span>机器数量</span></div><div style="width:33.3%;"><div id="machineCount-left"></div><span>0</span><span>销售杯数</span></div><div style="width:33.3%;"><span>0.00</span><span>销售总额</span></div></li>' +
+                '</ul></a></div>';
+            }
+            $("#shop-list").html(str || "无");
+            $('#money-msg').html(payMoney_Num);
+            $('#cup-msg').html(payCount_Num);
+            $('#startTime').val(startTimes || " ");
+            $('#endTime').val(endTimes || " ");
           }
-          $("#shop-list").html(str||"无");
-          $('#money-msg').html(payMoney_Num);
-          $('#cup-msg').html(payCount_Num);
-          $('#startTime').val(startTimes||" ");
-          $('#endTime').val(endTimes||" ");
         }
-      }
-      toList = true;    
-    })
-    .fail(function(err) {
+        toList = true;
+      })
+      .fail(function (err) {
         // jzm.Error(err);
         console.log(err)
-        toList = true;    
-    })
-  }else{
+        toList = true;
+      })
+  } else {
     return false;
   }
 };
 //所有机器销售情况和商户机器销售情况
 var machineBest = true;
-jzm.machineBest = function(type,num,startTimes,endTimes){ 
-    // alert('toList')
-    // console.log(startTimes)
-    // console.log(endTimes)
-    if(machineBest){
-      machineBest = false;
-      $.ajax({
-        url:httpJoin + "machine_best_or_worst",
-        type:"POST",
-        async:true,
-        dataType:"JSON",
-        data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),startTime:startTimes||null,endTime:endTimes||null,name:null,adminID:num||jzm.getQueryString('val'),adminId:num||jzm.getQueryString('val'),type:type}//}
-      })
-      .done(function(r){
-          console.log(r.soldList)
-        if(stateCode.test(r.statusCode.status)){
+jzm.machineBest = function (type, num, startTimes, endTimes) {
+  // alert('toList')
+  // console.log(startTimes)
+  // console.log(endTimes)
+  $('#loadingBox').show();
+  if (machineBest) {
+    machineBest = false;
+    $.ajax({
+      url: httpJoin + "machine_best_or_worst",
+      type: "POST",
+      async: true,
+      dataType: "JSON",
+      // idKey
+      // data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),startTime:startTimes||null,endTime:endTimes||null,name:null,adminID:num||jzm.getQueryString('val'),adminId:num||jzm.getQueryString('val'),type:type}//}
+      data: { idKey: _self.idKey, url: jzm.uncompilestr(_self.uri), startTime: startTimes || null, endTime: endTimes || null, name: null, adminID: num || jzm.getQueryString('val'), adminId: num || jzm.getQueryString('val'), type: type, loginType: _self.loginType }//}
+    })
+      .done(function (r) {
+        console.log(r.soldList)
+        if (stateCode.test(r.statusCode.status)) {
           // jzm.Error(r)
-          // window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
-        }else if(r.statusCode.status==200){
-          //  window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
-         }else if(type==1){
+          window.location.href = './fake_html/fake-index.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg;
+        } else if (r.statusCode.status == 200) {
+          window.location.href = './fake_html/fake-index.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg;
+        } else if (type == 1) {
           // console.log(r)
-          var bestStr="",worst_str="",best_str="";
-          if(r.soldList==null){
-            for(var i= 0;i<3;i++){
-              bestStr+='<div style="color:#fff;"><a><div>'+0+'</div><div>No.'+0+'</div></a></div>'
-  
-              worstStr+='<div style="color:#fff;"><a><div>'+0+'</div><div>No.'+0+'</div></a></div>'
+          var bestStr = "", worst_str = "", best_str = "";
+          if (r.soldList == null) {
+            for (var i = 0; i < 3; i++) {
+              bestStr += '<div style="color:#fff;"><a><div>' + 0 + '</div><div>No.' + 0 + '</div></a></div>'
+
+              worstStr += '<div style="color:#fff;"><a><div>' + 0 + '</div><div>No.' + 0 + '</div></a></div>'
             }
-          }else{
-            if(r.soldList.length<6){
+          } else {
+            if (r.soldList.length < 6) {
               console.log('机器台数少于6时候')
-                for(var i=0;i<r.soldList.length;i++){
-                if(r.soldList[0].num==r.soldList[i].num){
-                  bestStr+='<li class="commercial-best first"><div><a href="./machine-sales-information.html?num='+r.soldList[i].machineNumber+'"><div>'+r.soldList[i].num+'</div><div>No.'+r.soldList[i].machineNumber+'</div></a></div></li>';
-                }else if(r.soldList[r.soldList.length-1].num==r.soldList[i].num){
-                  bestStr+='<li class="commercial-best last"><div><a href="./machine-sales-information.html?num='+r.soldList[i].machineNumber+'"><div>'+r.soldList[i].num+'</div><div>No.'+r.soldList[i].machineNumber+'</div></a></div></li>';
-                }else{
-                  bestStr+='<li class="commercial-best middle"><div><a href="./machine-sales-information.html?num='+r.soldList[i].machineNumber+'"><div>'+r.soldList[i].num+'</div><div>No.'+r.soldList[i].machineNumber+'</div></a></div></li>';
+              for (var i = 0; i < r.soldList.length; i++) {
+                if (r.soldList[0].num == r.soldList[i].num) {
+                  bestStr += '<li class="commercial-best first"><div><a href="./machine-sales-information.html?num=' + r.soldList[i].machineNumber + '"><div>' + r.soldList[i].num + '</div><div>No.' + r.soldList[i].machineNumber + '</div></a></div></li>';
+                } else if (r.soldList[r.soldList.length - 1].num == r.soldList[i].num) {
+                  bestStr += '<li class="commercial-best last"><div><a href="./machine-sales-information.html?num=' + r.soldList[i].machineNumber + '"><div>' + r.soldList[i].num + '</div><div>No.' + r.soldList[i].machineNumber + '</div></a></div></li>';
+                } else {
+                  bestStr += '<li class="commercial-best middle"><div><a href="./machine-sales-information.html?num=' + r.soldList[i].machineNumber + '"><div>' + r.soldList[i].num + '</div><div>No.' + r.soldList[i].machineNumber + '</div></a></div></li>';
                 }
               }
-              $('#bestStr').html(bestStr||'无');
-            }else{
-              for(var i= 0;i<3;i++){
+              $('#bestStr').html(bestStr || '无');
+            } else {
+              for (var i = 0; i < 3; i++) {
                 // num+=r.worst[i].num
                 // payCountNum.push(r.worst[i])
-                best_str+='<div style="color:#fff;"><a href="./machine-sales-information.html?num='+r.soldList[i].machineNumber+'"><div>'+r.soldList[i].num+'</div><div>No.'+r.soldList[i].machineNumber+'</div></a></div>'
+                best_str += '<div style="color:#fff;"><a href="./machine-sales-information.html?num=' + r.soldList[i].machineNumber + '"><div>' + r.soldList[i].num + '</div><div>No.' + r.soldList[i].machineNumber + '</div></a></div>'
               }
-              for(var i=r.soldList.length-3;i<r.soldList.length;i++){
-                  worst_str+='<div style="color:#fff;"><a href="./machine-sales-information.html?num='+r.soldList[i].machineNumber+'"><div>'+r.soldList[i].num+'</div><div>No.'+r.soldList[i].machineNumber+'</div></a></div>'
+              for (var i = r.soldList.length - 3; i < r.soldList.length; i++) {
+                worst_str += '<div style="color:#fff;"><a href="./machine-sales-information.html?num=' + r.soldList[i].machineNumber + '"><div>' + r.soldList[i].num + '</div><div>No.' + r.soldList[i].machineNumber + '</div></a></div>'
               }
-              $('#best').html(best_str||'无')
-              $('#worst').html(worst_str||'无')
+              $('#best').html(best_str || '无')
+              $('#worst').html(worst_str || '无')
             }
-            
+
           }
-         
-         }else{
-            //  console.log(r)
-              var str="",bestStr="",worstStr="",payCountNum=[],Arr=[];
-              if(r.soldList==null){
+        } else {
+          //  console.log(r)
+          var str = "", bestStr = "", worstStr = "", payCountNum = [], Arr = [];
+          if (r.soldList == null) {
+            // console.log(1)
+            return false;
+          } else {
+            for (var i = 0; i < r.soldList.length; i++) {
+              // 判断是否所有机器销售为0
+              if (r.soldList[i].num == 0) {
+                Arr.push(r.soldList[i])
+              }
+            }
+            // console.log(Arr.length==r.best.length)
+            if (Arr.length == r.soldList.length) {
+              console.log('全部机器销售为0')
+              for (var j = 0; j < r.soldList.length; j++) {
                 // console.log(1)
-               return false;
-              }else{
-                for(var i=0;i<r.soldList.length;i++){
-                  // 判断是否所有机器销售为0
-                  if(r.soldList[i].num==0){
-                      Arr.push(r.soldList[i])
+                worstStr += '<li class="commercial-best last"><div><a href="./machine-sales-information.html?num=' + r.soldList[j].machineNumber + '"><div>' + r.soldList[j].num + '</div><div>No.' + r.soldList[j].machineNumber + '</div></a></div></li>';
+              }
+              // console.log(worstStr)
+              $('#machine-info').html('<div class="commercial-footer-data"><ul class="commercial-footer-data-box" id="commercial">' + worstStr + '</ul></div>')
+              Arr = [];
+            } else {
+              // console.log(111111111111111111111)
+              // 机器台数少于6时候
+              if (r.soldList.length < 6) {
+                console.log('机器台数少于6时候')
+                for (var i = 0; i < r.soldList.length; i++) {
+                  if (r.soldList[0].num == r.soldList[i].num) {
+                    bestStr += '<li class="commercial-best first"><div><a href="./machine-sales-information.html?num=' + r.soldList[i].machineNumber + '"><div>' + r.soldList[i].num + '</div><div>No.' + r.soldList[i].machineNumber + '</div></a></div></li>';
+                  } else if (r.soldList[r.soldList.length - 1].num == r.soldList[i].num) {
+                    bestStr += '<li class="commercial-best last"><div><a href="./machine-sales-information.html?num=' + r.soldList[i].machineNumber + '"><div>' + r.soldList[i].num + '</div><div>No.' + r.soldList[i].machineNumber + '</div></a></div></li>';
+                  } else {
+                    bestStr += '<li class="commercial-best middle"><div><a href="./machine-sales-information.html?num=' + r.soldList[i].machineNumber + '"><div>' + r.soldList[i].num + '</div><div>No.' + r.soldList[i].machineNumber + '</div></a></div></li>';
                   }
                 }
-                // console.log(Arr.length==r.best.length)
-                if(Arr.length==r.soldList.length){
-                  console.log('全部机器销售为0')
-                  for(var j=0;j<r.soldList.length;j++){
-                    // console.log(1)
-                     worstStr+='<li class="commercial-best last"><div><a href="./machine-sales-information.html?num='+r.soldList[j].machineNumber+'"><div>'+r.soldList[j].num+'</div><div>No.'+r.soldList[j].machineNumber+'</div></a></div></li>';
+              } else {
+                // console.log(r.best.length)
+                for (var i = 0; i < 3; i++) {
+                  // num+=r.best[i].num
+                  payCountNum.push(r.soldList[i])
+                }
+                // console.log(r.soldList.length-3)
+                // console.log(r.soldList.length)
+                for (var i = r.soldList.length - 3; i < r.soldList.length; i++) {
+                  payCountNum.push(r.soldList[i])
+                }
+                // console.log(payCountNum)
+                for (var i = 0; i < payCountNum.length; i++) {
+                  if (payCountNum[0].num == payCountNum[i].num) {
+                    bestStr += '<li class="commercial-best first"><div><a href="./machine-sales-information.html?num=' + payCountNum[i].machineNumber + '"><div>' + payCountNum[i].num + '</div><div>No.' + payCountNum[i].machineNumber + '</div></a></div></li>';
+                  } else if (payCountNum[payCountNum.length - 1].num == payCountNum[i].num) {
+                    bestStr += '<li class="commercial-best last"><div><a href="./machine-sales-information.html?num=' + payCountNum[i].machineNumber + '"><div>' + payCountNum[i].num + '</div><div>No.' + payCountNum[i].machineNumber + '</div></a></div></li>';
+                  } else {
+                    bestStr += '<li class="commercial-best middle"><div><a href="./machine-sales-information.html?num=' + payCountNum[i].machineNumber + '"><div>' + payCountNum[i].num + '</div><div>No.' + payCountNum[i].machineNumber + '</div></a></div></li>';
                   }
-                  // console.log(worstStr)
-                  $('#machine-info').html('<div class="commercial-footer-data"><ul class="commercial-footer-data-box" id="commercial">'+worstStr+'</ul></div>')
-                  Arr=[];
-                }else{
-                  // console.log(111111111111111111111)
-                  // 机器台数少于6时候
-                  if(r.soldList.length<6){
-                    console.log('机器台数少于6时候')
-                     for(var i=0;i<r.soldList.length;i++){
-                      if(r.soldList[0].num==r.soldList[i].num){
-                        bestStr+='<li class="commercial-best first"><div><a href="./machine-sales-information.html?num='+r.soldList[i].machineNumber+'"><div>'+r.soldList[i].num+'</div><div>No.'+r.soldList[i].machineNumber+'</div></a></div></li>';
-                      }else if(r.soldList[r.soldList.length-1].num==r.soldList[i].num){
-                        bestStr+='<li class="commercial-best last"><div><a href="./machine-sales-information.html?num='+r.soldList[i].machineNumber+'"><div>'+r.soldList[i].num+'</div><div>No.'+r.soldList[i].machineNumber+'</div></a></div></li>';
-                      }else{
-                        bestStr+='<li class="commercial-best middle"><div><a href="./machine-sales-information.html?num='+r.soldList[i].machineNumber+'"><div>'+r.soldList[i].num+'</div><div>No.'+r.soldList[i].machineNumber+'</div></a></div></li>';
-                      }
-                    }
-                  }else{
-                    // console.log(r.best.length)
-                   for(var i= 0;i<3;i++){
-                      // num+=r.best[i].num
-                      payCountNum.push(r.soldList[i])
-                    }
-                    // console.log(r.soldList.length-3)
-                    // console.log(r.soldList.length)
-                    for(var i= r.soldList.length-3;i<r.soldList.length;i++){
-                      payCountNum.push(r.soldList[i])
-                    }
-                    // console.log(payCountNum)
-                    for(var i=0;i<payCountNum.length;i++){
-                      if(payCountNum[0].num==payCountNum[i].num){
-                        bestStr+='<li class="commercial-best first"><div><a href="./machine-sales-information.html?num='+payCountNum[i].machineNumber+'"><div>'+payCountNum[i].num+'</div><div>No.'+payCountNum[i].machineNumber+'</div></a></div></li>';
-                      }else if(payCountNum[payCountNum.length-1].num==payCountNum[i].num){
-                        bestStr+='<li class="commercial-best last"><div><a href="./machine-sales-information.html?num='+payCountNum[i].machineNumber+'"><div>'+payCountNum[i].num+'</div><div>No.'+payCountNum[i].machineNumber+'</div></a></div></li>';
-                      }else{
-                        bestStr+='<li class="commercial-best middle"><div><a href="./machine-sales-information.html?num='+payCountNum[i].machineNumber+'"><div>'+payCountNum[i].num+'</div><div>No.'+payCountNum[i].machineNumber+'</div></a></div></li>';
-                      }
-                    }
-                  }
-                } 
-              $('#machine-info').html('<div class="commercial-footer-data"><ul class="commercial-footer-data-box" id="commercial">'+bestStr+'</ul></div>')
-             }
-              $('.commercial-footer-data-box').html(bestStr||worstStr);
-         }
-         machineBest = true;
-      })
-      .fail(function(err) {
+                }
+              }
+            }
+            $('#machine-info').html('<div class="commercial-footer-data"><ul class="commercial-footer-data-box" id="commercial">' + bestStr + '</ul></div>')
+          }
+          $('.commercial-footer-data-box').html(bestStr || worstStr);
+        }
         machineBest = true;
-          // jzm.Error(err);
+        $('#loadingBox').hide();
       })
-    }else{
-      return false;
-    }
-
-};
-var machinList = true;
-jzm.machinList = function(type,startTimes,endTimes){  //管理员  维修人员
-  var pageNum=1;
-  if(machinList){
-    paging(pageNum)
-  }else{
+      .fail(function (err) {
+        machineBest = true;
+        // jzm.Error(err);
+      })
+  } else {
     return false;
   }
-  function paging(page){
+};
+var machinList = true;
+jzm.machinList = function (type, startTimes, endTimes) {  //管理员  维修人员
+  var pageNum = 1;
+  if (machinList) {
+    paging(pageNum)
+  } else {
+    return false;
+  }
+  function paging(page) {
     $.ajax({
-      url:httpJoin + "phone_machine_info",
-      type:"POST",
-      async:true,
-      dataType:"JSON",
-      data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),startTime:startTimes||null,endTime:endTimes||null,type:jzm.getQueryString("type")||type,page:page,onlineStatus:jzm.getQueryString("val")||null,failureStatus:jzm.getQueryString("val1")||null,materialStatus:jzm.getQueryString("val2")||null}
+      url: httpJoin + "phone_machine_info",
+      type: "POST",
+      async: true,
+      dataType: "JSON",
+      // data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),startTime:startTimes||null,endTime:endTimes||null,type:jzm.getQueryString("type")||type,page:page,onlineStatus:jzm.getQueryString("val")||null,failureStatus:jzm.getQueryString("val1")||null,materialStatus:jzm.getQueryString("val2")||null}
+      data: { idKey: _self.idKey, url: jzm.uncompilestr(_self.uri), startTime: startTimes || null, endTime: endTimes || null, type: jzm.getQueryString("type") || type, page: page, onlineStatus: jzm.getQueryString("val") || null, failureStatus: jzm.getQueryString("val1") || null, materialStatus: jzm.getQueryString("val2") || null, loginType: _self.loginType }
     })
-    .done(function(r) {
-      // console.log(r.statusCode.status)
-      (stateCode.test(r.statusCode.status)&&type==1||r.statusCode.status==200&&type==1) ?  window.location.href = './fake_html/fake-atack.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg : (type == 1 ||jzm.getQueryString("type")==1 ? (function(){
-        // console.log(r.machineShowList)
-        var str = "",i = 0,btn_num="",strState="",abnormal='',machineShowList=[],offLine=[];
-        for(; i < r.machineShowList.length; i ++){
-          if((r.machineShowList[i].onlineStatus=='无'||r.machineShowList[i].onlineStatus=='在线')&&(r.machineShowList[i].failureStatus=='无'||r.machineShowList[i].failureStatus=='正常')&&(r.machineShowList[i].materialStatus=='无'||r.machineShowList[i].materialStatus=='正常')){
-            machineShowList.push(r.machineShowList[i])
-          }else if(r.machineShowList[i].onlineStatus=='离线'){
-            offLine.push(r.machineShowList[i])
-          }else{
-            machineShowList.unshift(r.machineShowList[i])
-          }
+      .done(function (r) {
+        // console.log(r.statusCode.status)
+        (stateCode.test(r.statusCode.status) && type == 1 || r.statusCode.status == 200 && type == 1) ? window.location.href = './fake_html/fake-atack.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg : (type == 1 || jzm.getQueryString("type") == 1 ? (function () {
           // console.log(r.machineShowList)
-        };
-        for(var a = 0;a<offLine.length;a++){
-          machineShowList.push(offLine[a])
-        }
-        console.log(machineShowList)
-        for(var j=0;j<machineShowList.length;j++){
-          if((machineShowList[j].onlineStatus=='无'||machineShowList[j].onlineStatus=='在线')&&(machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常')&&(machineShowList[j].materialStatus=='无'||machineShowList[j].materialStatus=='正常')){
-            abnormal = '<div id="state-green"></div>';
-          }else if(machineShowList[j].onlineStatus=='离线'&&(machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常')&&(machineShowList[j].materialStatus=='无'||machineShowList[j].materialStatus=='正常')){
-            abnormal = '<div id="state-yellow"></div>'; 
-          }else{
-            abnormal = '<div id="state-red"></div>'; 
-          }
-          if(machineShowList[j].onlineStatus=='无'||machineShowList[j].onlineStatus=='在线'){
-            console.log('在线状态：正常')
-             strState+='<span>在线状态：<span style="color:#2DCC70;">'+ machineShowList[j].onlineStatus +'</span></span>';
-           }else{
-             console.log('在线状态：故障')
-             strState +='<span>在线状态：<span style="color:#FFA500;">'+ machineShowList[j].onlineStatus +'</span></span>';
-             
-           }
-           if(machineShowList[j].failureStatus=='无'||machineShowList[j].failureStatus=='正常'){
-            console.log('故障状态：正常')
-             strState +='<span>故障状态：<span style="color:#2DCC70;">'+ machineShowList[j].failureStatus +'</span></span>';
-           }else{
-              console.log('故障状态：故障')
-               strState +='<span>故障状态：<span style="color:red;">'+ machineShowList[j].failureStatus +'</span></span>';
-           }
-          if(machineShowList[j].materialStatus=='无'||machineShowList[j].materialStatus=='正常'){
-            console.log('缺料状态：正常')
-             strState +='<span>缺料状态：<span style="color:#2DCC70;">'+ machineShowList[j].materialStatus +'</span></span>';
-          }else{
-            console.log('缺料状态：故障')
-             strState +='<span>缺料状态：<span style="color:red;">'+ machineShowList[j].materialStatus +'</span></span>';
-          }
-          str += '<div><ul><li onclick="jzm.state('+j+')"><span>'+ machineShowList[j].adminName+'</span><span>'+machineShowList[j].machineNumber+'</span><span>'+ machineShowList[j].maintainerName+'</span><span>'+abnormal+'</span></li>'+
-                  '<ul id="state-box" index=0 style="display:none;">'+
-                    '<li>机器地址：'+ machineShowList[j].machineAddrDesc +'</li>'+
-                    '<li class="number"><span>机器编号：<span style="font-weight:bold;">'+ machineShowList[j].machineNumber +'</span></span><span>SN号：<span style="font-weight:bold;">'+ machineShowList[j].machineSn +'</span></span></li>'+
-                    '<li class="state">'+strState+'</li>'+
-                    '<li class="personnel"><span>维护人员：<span style="color:blue;">'+ machineShowList[j].maintainerName +'</span></span><span>维护人员手机号：<span style="color:blue;">'+ machineShowList[j].maintainerPhone +'</span></span></li>'+
-                    '<li class="last_a">'+
-                      '<a href="./atack_info.html?machineNumber='+machineShowList[j].machineNumber +'">查看日志</a>'+
-                      '<a href="./atack_message.html?machineNumber='+machineShowList[j].machineNumber +'">详细查看</a>'+
-                    '</li>'+
-                  '</ul>'+
-                  '</ul></div>';
-         strState = "";
-         abnormal = "";
-        } 
-        $("#list").html(str || "无");
-        if(r.pageCount>1){
-           $('.pading').html('<button>上一页</button><ul class="btn-num"></ul><button>下一页</button>')
-            for(var j=0;j<r.pageCount;j++){
-            btn_num+='<button>'+(j+1)+'</button>';
+          var str = "", i = 0, btn_num = "", strState = "", abnormal = '', machineShowList = [], offLine = [];
+          // 后端操作排序
+          for (; i < r.machineShowList.length; i++) {
+            machineShowList.push(r.machineShowList[i])
+            // if ((r.machineShowList[i].onlineStatus == '在线') && (r.machineShowList[i].failureStatus == '无' || r.machineShowList[i].failureStatus == '正常') && (r.machineShowList[i].materialStatus == '无' || r.machineShowList[i].materialStatus == '正常')) {
+            //   machineShowList.push(r.machineShowList[i])
+            // } else if (r.machineShowList[i].onlineStatus == '离线' || r.machineShowList[i].onlineStatus == '无') {
+            //   offLine.push(r.machineShowList[i])
+            // } else {
+            //   machineShowList.unshift(r.machineShowList[i])
+            // }
+            // console.log(r.machineShowList)
           };
-           $('.btn-num').html(btn_num);
-          //分页按钮方法
-          jzm.pageBtn(page,r.pageCount);
-
+          // 后端操作排序
+          // for (var a = 0; a < offLine.length; a++) {
+          //   machineShowList.push(offLine[a])
+          // }
+          // console.log(machineShowList)
+          for (var j = 0; j < machineShowList.length; j++) {
+            // console.log((machineShowList[j].onlineStatus == '在线' || machineShowList[j].onlineStatus == '无') , (machineShowList[j].failureStatus == '正常' || machineShowList[j].failureStatus == '无') , machineShowList[j].materialStatus,(machineShowList[j].materialStatus == '缺料' || machineShowList[j].materialStatus == '无'))
+            // machineShowList[j].onlineStatus = '在线'
+            machineShowList[j].maintainerName = machineShowList[j].maintainerName == null ? '无' : machineShowList[j].maintainerName;
+            machineShowList[j].maintainerPhone = machineShowList[j].maintainerPhone == null ? '无' : machineShowList[j].maintainerPhone;
+            if ((machineShowList[j].onlineStatus == '在线') && (machineShowList[j].failureStatus == '正常') && (machineShowList[j].materialStatus == '正常')) {
+              abnormal = '<div id="state-green"></div>';
+            } else if ((machineShowList[j].onlineStatus == '离线' || machineShowList[j].onlineStatus == '无') && (machineShowList[j].failureStatus == '正常' || machineShowList[j].failureStatus == '无') && (machineShowList[j].materialStatus == '正常' || machineShowList[j].materialStatus == '无')) {
+              abnormal = '<div id="state-gray"></div>';
+            } else if((machineShowList[j].onlineStatus == '在线' || machineShowList[j].onlineStatus == '无') && (machineShowList[j].failureStatus == '正常' || machineShowList[j].failureStatus == '无') && (machineShowList[j].materialStatus == '缺失' || machineShowList[j].materialStatus == '无')){
+              abnormal = '<div id="state-yellow"></div>';
+            }else{
+              abnormal = '<div id="state-red"></div>';
+            }
+            // if ((machineShowList[j].onlineStatus == '在线') && (machineShowList[j].failureStatus == '正常') && (machineShowList[j].materialStatus == '正常')) {
+            //   abnormal = '<div id="state-green"></div>';
+            // } else if ((machineShowList[j].onlineStatus == '离线' || machineShowList[j].onlineStatus == '无') && (machineShowList[j].failureStatus == '正常' || machineShowList[j].failureStatus == '无') && (machineShowList[j].materialStatus == '正常' || machineShowList[j].materialStatus == '无')) {
+            //   abnormal = '<div id="state-yellow"></div>';
+            // } else {
+            //   abnormal = '<div id="state-red"></div>';
+            // }
+            // if (machineShowList[j].onlineStatus == '在线') {
+            //   // console.log('在线状态：正常')
+            //   strState += '<span>在线状态：<span style="color:#2DCC70;">' + machineShowList[j].onlineStatus + '</span></span>';
+            // } else {
+            //   // console.log('在线状态：故障')
+            //   strState += '<span>在线状态：<span style="color:#FFA500;">' + machineShowList[j].onlineStatus + '</span></span>';
+            // }
+            // if (machineShowList[j].failureStatus == '正常') {
+            //   // console.log('故障状态：正常')
+            //   strState += '<span>故障状态：<span style="color:#2DCC70;">' + machineShowList[j].failureStatus + '</span></span>';
+            // } else {
+            //   // console.log('故障状态：故障')
+            //   strState += '<span>故障状态：<span style="color:red;">' + machineShowList[j].failureStatus + '</span></span>';
+            // }
+            // if (machineShowList[j].materialStatus == '正常') {
+            //   // console.log('缺料状态：正常')
+            //   strState += '<span>缺料状态：<span style="color:#2DCC70;">' + machineShowList[j].materialStatus + '</span></span>';
+            // } else {
+            //   // console.log('缺料状态：故障')
+            //   strState += '<span>缺料状态：<span style="color:red;">' + machineShowList[j].materialStatus + '</span></span>';
+            // }
+            if (machineShowList[j].onlineStatus == '在线') {
+              // console.log('在线状态：正常')
+              strState += '<span>在线状态：<span style="color:#2DCC70;">' + machineShowList[j].onlineStatus + '</span></span>';
+            } else {
+              // console.log('在线状态：故障')
+              strState += '<span>在线状态：<span style="color:#B8BAB9;">' + machineShowList[j].onlineStatus + '</span></span>';
+            }
+            if (machineShowList[j].failureStatus == '正常') {
+              // console.log('故障状态：正常')
+              strState += '<span>故障状态：<span style="color:#2DCC70;">' + machineShowList[j].failureStatus + '</span></span>';
+            } else {
+              // console.log('故障状态：故障')
+              strState += '<span>故障状态：<span style="color:red;">' + machineShowList[j].failureStatus + '</span></span>';
+            }
+            if (machineShowList[j].materialStatus == '正常') {
+              // console.log('缺料状态：正常')
+              strState += '<span>缺料状态：<span style="color:#2DCC70;">' + machineShowList[j].materialStatus + '</span></span>';
+            } else {
+              // console.log('缺料状态：故障')
+              strState += '<span>缺料状态：<span style="color:#FFA500;">' + machineShowList[j].materialStatus + '</span></span>';
+            }
+            str += '<div><ul><li onclick="jzm.state(' + j + ')"><span>' + machineShowList[j].adminName + '</span><span>' + machineShowList[j].machineNumber + '</span><span>' + machineShowList[j].maintainerName + '</span><span>' + abnormal + '</span></li>' +
+              '<ul id="state-box" index=0 style="display:none;">' +
+              '<li>机器地址：' + machineShowList[j].machineAddrDesc + '</li>' +
+              '<li class="number"><span>机器编号：<span style="font-weight:bold;">' + machineShowList[j].machineNumber + '</span></span><span>SN号：<span style="font-weight:bold;">' + machineShowList[j].machineSn + '</span></span></li>' +
+              '<li class="state">' + strState + '</li>' +
+              '<li class="personnel"><span>维护人员：<span style="color:blue;">' + machineShowList[j].maintainerName + '</span></span><span>维护人员手机号：<span style="color:blue;">' + machineShowList[j].maintainerPhone + '</span></span></li>' +
+              '<li class="last_a">' +
+              '<a href="./atack_message.html?machineNumber=' + machineShowList[j].machineNumber + '">查看日志</a>' +
+              '<a href="./atack_info.html?machineNumber=' + machineShowList[j].machineNumber + '">详细查看</a>' +
+              '</li>' +
+              '</ul>' +
+              '</ul></div>';
+            strState = "";
+            abnormal = "";
+          }
+          $("#list").html(str || "无");
+          // r.pageCount = 50
+          if (r.pageCount > 1) {
+            $('.pading').html('<button>上一页</button><ul class="btn-num"></ul><button>下一页</button>')
+            for (var j = 1; j <= r.pageCount; j++) {
+              btn_num += '<button>' + j + '</button>';
+            };
+            $('.btn-num').html(btn_num);
+            //分页按钮方法
+            // jzm.pageBtn(page,r.pageCount);
+            jzm.pageBtn(page, r.pageCount);
             // 分页按钮
-          $('.btn-num').click(function(ev){
-            var ev = ev || window.event;
-            var target = ev.target || ev.srcElement;
-            if(target.nodeName.toLowerCase() == 'button'){
-              pageNum = target.innerHTML;
-              paging(target.innerHTML)
-              // alert(target.innerHTML)
-              // console.log(target.innerHTML)
-        　  }
-        　});
-          // 上一页
-          $('.pading').children('button').eq(0).click(function(){
-              if(pageNum>1){
+            $('.btn-num').click(function (ev) {
+              var ev = ev || window.event;
+              var target = ev.target || ev.srcElement;
+              if (target.nodeName.toLowerCase() == 'button') {
+                pageNum = target.innerHTML;
+                paging(target.innerHTML)
+                // alert(target.innerHTML)
+                // console.log(target.innerHTML)
+              }
+            });
+            // 上一页
+            $('.pading').children('button').eq(0).click(function () {
+              if (pageNum > 1) {
                 pageNum--;
                 paging(pageNum);
-              }else{
+              } else {
                 paging(1);
               }
-          });
-          // 下一页
-         $('.pading').children('button').eq(1).click(function(){
-            if(pageNum<pageCount){
-              pageNum++;
-              paging(pageNum);
-            }else{
-              paging(pageCount);
-            }
-          });
-          return pageCount=r.pageCount;
-        }
-      })() : (function(){
-        if(stateCode.test(r.statusCode.status)||r.statusCode.status==200){
-          // console.log()
-          // window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
-					//console.log(11111)
-        }else{
-          // 离线数量：
-          $('#off_line_number').html('<span>'+r.offLineNum||0+'</span>')
-          // 机器总数：
-          $('#number_of_machines').html('<span>'+r.machineCount||0+'</span>')
-          // 故障数量：
-          $('#Number_of_faults').html('<span>'+r.faultNum||0+'</span>')
-          // 缺料数量：
-          $('#lack_of_quantity').html('<span>'+r.starvingNum||0+'</span>')
-        }
+            });
+            // 下一页
+            $('.pading').children('button').eq(1).click(function () {
+              if (pageNum < r.pageCount) {
+                pageNum++;
+                paging(pageNum);
+              } else {
+                paging(pageCount);
+              }
+            });
+            // return pageCount=r.pageCount;
+          }
+        })() : (function () {
+          if (stateCode.test(r.statusCode.status) || r.statusCode.status == 200) {
+            // console.log()
+            window.location.href = './fake_html/fake-index.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg;
+            //console.log(11111)
+          } else {
+            // 离线数量：
+            $('#off_line_number').html('<span>' + r.offLineNum || 0 + '</span>')
+            // 机器总数：
+            $('#number_of_machines').html('<span>' + r.machineCount || 0 + '</span>')
+            // 故障数量：
+            $('#Number_of_faults').html('<span>' + r.faultNum || 0 + '</span>')
+            // 缺料数量：
+            $('#lack_of_quantity').html('<span>' + r.starvingNum || 0 + '</span>')
+          }
+          machinList = true;
+          jzm.incident();
+          // jzm.dateSearch();
+        })());
+      })
+      .fail(function (err) {
         machinList = true;
-        jzm.incident();
-        // jzm.dateSearch();
-      })() );
-    })
-    .fail(function(err) {
-      machinList = true;
         jzm.Error(err);
-    })
+      })
   };
 };
-jzm.machinListInfo = function(){  //管理员 维修人员  设备状态详细信息
+jzm.machinListInfo = function () {  //管理员 维修人员  设备状态详细信息
   // alert('machinListInfo')
   $.ajax({
-    url:httpJoin + "phone_machine_detail",
-    type:"POST",
-    async:true,
-    dataType:"JSON",
-    data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),machineNumber:jzm.getQueryString("machineNumber")}
+    url: httpJoin + "phone_machine_detail",
+    type: "POST",
+    async: true,
+    dataType: "JSON",
+    // idKey
+    // data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),machineNumber:jzm.getQueryString("machineNumber")}
+    data: { idKey: _self.idKey, url: jzm.uncompilestr(_self.uri), machineNumber: jzm.getQueryString("machineNumber"), loginType: _self.loginType }
   })
-  .done(function(r) {
-    // console.log(r)
-    // alert('machinListInfo')
-    (stateCode.test(r.statusCode.status)||r.statusCode.status==200) ?  window.location.href = './fake_html/fake-atack_info.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg : (function(){
-      // jzm.machinList(1);
-      // console.log(machineNumber)
-      var str = "",strState="";
-      if(r.machineStatus.machineStatus!='正常待机'){
-        strState+='<div>机器状态：<span style="color:red;">'+ r.machineStatus.machineStatus +'</span></div>'
-      }else{
-        strState+='<div>机器状态：<span style="color:#2DCC70;">'+ r.machineStatus.machineStatus +'</span></div>'
-      }
-      if( r.machineStatus.failureStatus!='正常待机'){
-         strState+='<div>故障状态：<span style="color:red;">'+ r.machineStatus.failureStatus +'</span></div>'
-      }else{
-          strState+='<div>故障状态：<span style="color:#2DCC70;">'+ r.machineStatus.failureStatus +'</span></div>'
-      }
-      if(r.machineStatus.productAllowedStatus!='0000'){
-        strState+='<div>传感器配置状态：<span style="color:#2DCC70;">'+ r.machineStatus.productAllowedStatus +'</span></div>'
-      }else{
-        strState+='<div>传感器配置状态：<span style="color:red;">'+ r.machineStatus.productAllowedStatus +'</span></div>'
-      }
-      if(r.machineStatus.bootTime!='0秒'){
-        strState+='<div>开机运行时间：<span style="color:#2DCC70;">'+ r.machineStatus.bootTime +'</span></div>'
-      }else{
-        strState+='<div>开机运行时间：<span style="color:red;">'+ r.machineStatus.bootTime +'</span></div>'
-      }
-      strState+='<div>累计时间：<span style="color:#2DCC70;">'+ r.machineStatus.cumulativeTime +'</span></div>';
+    .done(function (r) {
+      // console.log(r)
+      // alert('machinListInfo')
+      console.log(jzm.getQueryString("machineNumber")[0]);
+      if (stateCode.test(r.statusCode.status) || r.statusCode.status == 200) {
+        if (r.statusCode.status == 4444) {
+          $("#list").html('<div style="text-align:center; margin-top:10px;">暂无数据</div>')
+        } else {
+          window.location.href = './fake_html/fake-atack_info.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg
+        }
+      } else {
+        var str = "", strState = "";
+        if (jzm.getQueryString("machineNumber")[0] == 1) {
+          if (r.machineStatus.machineStatus != '正常待机') {
+            strState += '<div>机器编号：<span style="color:red;">' + jzm.getQueryString("machineNumber") + '</span></div>'
+          } else {
+            strState += '<div>机器编号：<span style="color:#2DCC70;">' + jzm.getQueryString("machineNumber") + '</span></div>'
+          }
+         
+          if (r.machineStatus.machineStatus != '正常待机') {
+            strState += '<div>机器状态：<span style="color:red;">' + r.machineStatus.machineStatus + '</span></div>'
+          } else {
+            strState += '<div>机器状态：<span style="color:#2DCC70;">' + r.machineStatus.machineStatus + '</span></div>'
+          }
 
-      if(r.machineStatus.boilerTemperature!='0.0度'){        strState+='<div>锅炉温度：<span style="color:#2DCC70;">'+ r.machineStatus.boilerTemperature +'</span></div>'
-      }else{
-        strState+='<div>锅炉温度：<span style="color:red;">'+ r.machineStatus.boilerTemperature +'</span></div>'
+          if (r.machineStatus.failureStatus != '正常待机') {
+            strState += '<div>故障状态：<span style="color:red;">' + r.machineStatus.failureStatus + '</span></div>'
+          } else {
+            strState += '<div>故障状态：<span style="color:#2DCC70;">' + r.machineStatus.failureStatus + '</span></div>'
+          }
+
+          if (r.machineStatus.productAllowedStatus != '0000') {
+            strState += '<div>传感器配置状态：<span style="color:#2DCC70;">' + r.machineStatus.productAllowedStatus + '</span></div>'
+          } else {
+            strState += '<div>传感器配置状态：<span style="color:red;">' + r.machineStatus.productAllowedStatus + '</span></div>'
+          }
+
+          if (r.machineStatus.bootTime != '0秒') {
+            strState += '<div>开机运行时间：<span style="color:#2DCC70;">' + r.machineStatus.bootTime + '</span></div>'
+          } else {
+            strState += '<div>开机运行时间：<span style="color:red;">' + r.machineStatus.bootTime + '</span></div>'
+          }
+
+          strState += '<div>累计时间：<span style="color:#2DCC70;">' + r.machineStatus.cumulativeTime + '</span></div>';
+
+          if (r.machineStatus.boilerTemperature != '0.0度') {
+            strState += '<div>锅炉温度：<span style="color:#2DCC70;">' + r.machineStatus.boilerTemperature + '</span></div>'
+          } else {
+            strState += '<div>锅炉温度：<span style="color:red;">' + r.machineStatus.boilerTemperature + '</span></div>'
+          }
+          if (r.machineStatus.boilerPressure != '0mbar') {
+            strState += '<div>锅炉压力：<span style="color:#2DCC70;">' + r.machineStatus.boilerPressure + '</span></div>'
+          } else {
+            strState += '<div>锅炉压力：<span style="color:red;">' + r.machineStatus.boilerPressure + '</span></div>'
+          }
+          if (r.machineConfig.hotWaterTemperature != '0.0度') {
+            strState += '<div>热水温度：<span style="color:#2DCC70;">' + r.machineConfig.hotWaterTemperature + '</span></div>'
+          } else {
+            strState += '<div>热水温度：<span style="color:red;">' + r.machineConfig.hotWaterTemperature + '</span></div>'
+          }
+          if (r.machineStatus.traffic == '0.0') {
+            strState += '<div>流量：<span style="color:#2DCC70;">' + r.machineStatus.traffic + '</span></div>'
+          } else {
+            strState += '<div>流量：<span style="color:red;">' + r.machineStatus.traffic + '</span></div>'
+          }
+          str += '<li>' +
+            '<div>' +
+            '<div>机器状态信息： <div class="version">当前版本：' + r.machineStatus.version + '</div></div>' + strState + '<div>' +
+            '</li>' +
+            '<li>' +
+            '<div>' +
+            '<div>料仓剩余量信息：</div>' +
+            '<div>料仓1(橙汁)：总量=<span style="color:blue;">' + r.canister[1] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[0] + '</span></div>' +
+            '<div>料仓2(奶粉)：总量=<span style="color:blue;">' + r.canister[3] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[2] + '</span></div>' +
+            '<div>料仓3(糖)：总量=<span style="color:blue;">' + r.canister[5] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[4] + '</span></div>' +
+            '<div>料仓4(奶粉)：总量=<span style="color:blue;">' + r.canister[7] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[6] + '</span></div>' +
+            '<div>料仓5(巧克力)：总量=<span style="color:blue;">' + r.canister[9] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[8] + '</span></div>' +
+            '<div>料仓6(茶)：总量=<span style="color:blue;">' + r.canister[11] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[10] + '</span></div>' +
+            '<div>料仓170(咖啡)：总量=<span style="color:blue;">' + r.canister[13] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[12] + '</span></div>' +
+            '<div>杯子：总量=<span style="color:blue;">' + r.canister[15] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[14] + '</span></div>';
+          if (r.canister[17] && r.canister[16]) {
+            str += '<div>水：总量=<span style="color:blue;">' + r.canister[17] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[16] + '</span></div>';
+          }
+          '</div>' +
+            '</li>';
+          $("#list").html(str || "无");
+          strState = "";
+        } else {
+          if (r.machineStatus != '在准备好界面（ready）') {
+            strState += '<div>机器编号：<span style="color:red;">' + jzm.getQueryString("machineNumber") + '</span></div>'
+          } else {
+            strState += '<div>机器编号：<span style="color:#2DCC70;">' + jzm.getQueryString("machineNumber") + '</span></div>'
+          }
+          if (r.machineStatus != '在准备好界面（ready）') {
+            strState += '<div>机器状态：<span style="color:red;">' + r.machineStatus + '</span></div>';
+            
+          } else {
+            strState += '<div>机器状态：<span style="color:#2DCC70;">' + r.machineStatus + '</span></div>';
+          }
+          
+          // strState += '<div>机器密码：<span style="color:#2DCC70;">' + r.machinePwd + '</span></div>';
+          str += '<li>' +
+            '<div>' +
+            '<div>机器状态信息： <div class="version">当前版本：' + r.version + '</div></div>' + strState + '<div>' +
+            '</li>' +
+            '<li>' +
+            '<div>' +
+            '<div>料仓剩余量信息：</div>' +
+            '<div>料仓1(咖啡)：总量=<span style="color:blue;">' + r.canister[1] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[0] + '</span></div>';
+          if (r.canister[2] && r.canister[3]) {
+            str += '<div>料仓2(奶)：总量=<span style="color:blue;">' + r.canister[3] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[2] + '</span></div>';
+          }
+          if (r.canister[4] && r.canister[5]) {
+            str += '<div>水：总量=<span style="color:blue;">' + r.canister[5] + "</span>------ 剩余量=<span style=" + 'color:blue;' + ">" + r.canister[4] + '</span></div>';
+          }
+          '</div>' +
+            '</li>';
+          $("#list").html(str || "无");
+        }
       }
-      if(r.machineStatus.boilerPressure!='0mbar'){
-        strState+='<div>锅炉压力：<span style="color:#2DCC70;">'+ r.machineStatus.boilerPressure +'</span></div>'
-      }else{
-        strState+='<div>锅炉压力：<span style="color:red;">'+ r.machineStatus.boilerPressure +'</span></div>'
-      }
-      if(r.machineConfig.hotWaterTemperature!='0.0度'){
-        strState+='<div>热水温度：<span style="color:#2DCC70;">'+ r.machineConfig.hotWaterTemperature +'</span></div>'
-      }else{
-        strState+='<div>热水温度：<span style="color:red;">'+ r.machineConfig.hotWaterTemperature +'</span></div>'
-      }
-      if(r.machineStatus.traffic=='0.0'){
-        strState+='<div>流量：<span style="color:#2DCC70;">'+ r.machineStatus.traffic +'</span></div>'
-      }else{
-        strState+='<div>流量：<span style="color:red;">'+ r.machineStatus.traffic +'</span></div>'
-      }
-      str += '<li>'+
-                '<div>'+
-                   '<div>机器状态信息： <div class="version">当前版本：'+ r.machineStatus.version  +'</div></div>'+strState+'<div>'+
-                 '</li>'+
-                '<li>'+
-                '<div>'+
-                 '<div>料仓剩余量信息：</div>'+
-                 '<div>料仓1(橙汁)：总量=<span style="color:blue;">'+ r.canister[1] +"</span>------ 剩余量=<span style="+'color:blue;'+">"+ r.canister[0] +'</span></div>'+
-                 '<div>料仓2(奶粉)：总量=<span style="color:blue;">'+ r.canister[3] +"</span>------ 剩余量=<span style="+'color:blue;'+">"+ r.canister[2] +'</span></div>'+
-                 '<div>料仓3(糖)：总量=<span style="color:blue;">'+ r.canister[5] +"</span>------ 剩余量=<span style="+'color:blue;'+">"+ r.canister[4] +'</span></div>'+
-                 '<div>料仓4(奶粉)：总量=<span style="color:blue;">'+ r.canister[7] +"</span>------ 剩余量=<span style="+'color:blue;'+">"+ r.canister[6] +'</span></div>'+
-                 '<div>料仓5(巧克力)：总量=<span style="color:blue;">'+ r.canister[9] +"</span>------ 剩余量=<span style="+'color:blue;'+">"+ r.canister[8] +'</span></div>'+
-                 '<div>料仓6(茶)：总量=<span style="color:blue;">'+ r.canister[11] +"</span>------ 剩余量=<span style="+'color:blue;'+">"+ r.canister[10] +'</span></div>'+
-                 '<div>料仓170(咖啡)：总量=<span style="color:blue;">'+ r.canister[13] +"</span>------ 剩余量=<span style="+'color:blue;'+">"+ r.canister[12] +'</span></div>'+
-                 '<div>杯子：总量=<span style="color:blue;">'+ r.canister[15] +"</span>------ 剩余量=<span style="+'color:blue;'+">"+ r.canister[14] +'</span></div>'+
-                 '</div>'+
-                '</li>';
-     
-      $("#list").html(str || "无");
-      strState="";
-    })();
-  })
-  .fail(function(err) {
+      // (stateCode.test(r.statusCode.status) || r.statusCode.status == 200) ? window.location.href = './fake_html/fake-atack_info.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg : (function () {
+      //  // jzm.machinList(1);
+      //  // console.log(machineNumber)
+      // })();
+    })
+    .fail(function (err) {
       jzm.Error(err);
-  })
+    })
 };
-jzm.machinListMessage = function(){  //管理员 维修人员  设备故障详细信息
+jzm.machinListMessage = function () {  //管理员 维修人员  设备故障详细信息
   // alert('machinListMessage')
   // console.log(num)
   $.ajax({
-    url:httpJoin + "phone_machine_logs",
-    type:"POST",
-    async:true,
-    dataType:"JSON",
-    data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),machineNumber:jzm.getQueryString("machineNumber")}
+    url: httpJoin + "phone_machine_logs",
+    type: "POST",
+    async: true,
+    dataType: "JSON",
+    // idKey
+    // data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),machineNumber:jzm.getQueryString("machineNumber")}
+    data: { idKey: _self.idKey, url: jzm.uncompilestr(_self.uri), machineNumber: jzm.getQueryString("machineNumber"), loginType: _self.loginType }
   })
-  .done(function(r) {
-    // console.log(r)
-    // console.log(r.list)
-    // alert('machinListMessage')
-    (stateCode.test(r.statusCode.status)||r.statusCode.status==200) ? window.location.href = './fake_html/fake-atack_message.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg : (function(){
+    .done(function (r) {
       // console.log(r)
-      var newArr=[];
-      //处理数组
-      for(var i=0;i<r.list.length;i++){
+      // console.log(r.list)
+      // alert('machinListMessage')
+      if (stateCode.test(r.statusCode.status) || r.statusCode.status == 200) {
+        if (r.statusCode.status == 4444) {
+          $("#list").html('<div style="text-align:center; margin-top:10px;">暂无数据</div>')
+        } else {
+          window.location.href = './fake_html/fake-atack_message.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg
+        }
+      } else {
+        // console.log(r)
+        var newArr = [];
+        //处理数组
+        for (var i = 0; i < r.list.length; i++) {
           var timeitem = jzm.getTimeStamp(r.list[i].faultTime);
           // console.log(r.list[i].faultTime);
           r.list[i].faultTime = timeitem;
-      }
-      // console.log(r.list)
+        }
 
-      // 重新排列数组
-      mapLoction(r.list)
-      function mapLoction(arr) {
+        // console.log(r.list)
+        // 重新排列数组
+        mapLoction(r.list)
+        function mapLoction(arr) {
           // newArr = [];
-          r.list.forEach(function(address, i){
-              var index = -1;
-              var alreadyExists = newArr.some(function(newAddress, j){
-                  if (address.faultTime === newAddress.faultTime) {
-                      index = j;
-                      return true;
-                  }
-              });
-              if (!alreadyExists) {
-                  newArr.push({
-                      faultTime: address.faultTime,
-                      data: [{
-                        'mFId':address.mFId,
-                        'machineSn':address.machineSn,
-                        'faultContent':address.faultContent,
-                        'machineNumber':address.machineNumber
-                      }]
-                  });
-              } else {
-                  newArr[index].data.push({
-                    'mFId':address.mFId,
-                    'machineSn':address.machineSn,
-                    'faultContent':address.faultContent,
-                    'machineNumber':address.machineNumber
-                  });
+          r.list.forEach(function (address, i) {
+            var index = -1;
+            var alreadyExists = newArr.some(function (newAddress, j) {
+              if (address.faultTime === newAddress.faultTime) {
+                index = j;
+                return true;
               }
+            });
+            if (!alreadyExists) {
+              newArr.push({
+                faultTime: address.faultTime,
+                data: [{
+                  'mFId': address.mFId,
+                  'machineSn': address.machineSn,
+                  'faultContent': address.faultContent,
+                  'machineNumber': address.machineNumber
+                }]
+              });
+            } else {
+              newArr[index].data.push({
+                'mFId': address.mFId,
+                'machineSn': address.machineSn,
+                'faultContent': address.faultContent,
+                'machineNumber': address.machineNumber
+              });
+            }
           });
           // return newArr;
-      };
-      // console.log(newArr)
-      for(var i = newArr.length-1; i>=0; i--){
-        $("#list").prepend('<div class="content">'+
-              '<div>'+
-                '<div>'+
-                  '<div>故障时间：<span style="color:#1A74EA; font-family:Roboto-Condensed;">'+ newArr[i].faultTime+'</span></div>'+
-                  '<div>故障内容：</div>'+
-                '</div>'+
-              '</div>'+
-              '</div>');
-      };
-      // var num=newArr.length;
-      // console.log(newArr)
-      for(var i = 0; i<newArr.length; i++){
-        // num>0?num--:num=0;
-        for(var j=0; j<newArr[i].data.length;j++){
-          // console.log(newArr[i].data)
-          // console.log(newArr[i].data[j].mFId)
-          // console.log(newArr[i].data[j].faultContent)
-          $('.content').eq(i).children('div').append(
-            '<ul class="fault message">'+
-                    '<li style="color:red; font-family:Roboto-Condensed;">ID：<span>'+ newArr[i].data[j].mFId +'</span></li>'+
-                    '<li>------<span>'+ newArr[i].data[j].faultContent +'</span></li>'+
-            '</ul>');
-        }
-      };
-      $('#header').children('form').children('input').attr('placeholder',newArr[0].data[0].machineNumber);
-      // $('#header').append('<button  onclick="jzm.num()" style="position:absolute; z-index:99;">搜索</button>')
-    })();
-  })
-  .fail(function(err) {
+        };
+        // console.log(newArr)
+        for (var i = newArr.length - 1; i >= 0; i--) {
+          $("#list").prepend('<div class="content">' +
+            '<div>' +
+            '<div>' +
+            '<div>故障时间：<span style="color:#1A74EA; font-family:Roboto-Condensed;">' + newArr[i].faultTime + '</span></div>' +
+            '<div>故障内容：</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
+        };
+        // var num=newArr.length;
+        // console.log(newArr)
+        for (var i = 0; i < newArr.length; i++) {
+          // num>0?num--:num=0;
+          for (var j = 0; j < newArr[i].data.length; j++) {
+            // console.log(newArr[i].data)
+            // console.log(newArr[i].data[j].mFId)
+            // console.log(newArr[i].data[j].faultContent)
+            $('.content').eq(i).children('div').append(
+              '<ul class="fault message">' +
+              '<li style="color:red; font-family:Roboto-Condensed;">ID：<span>' + newArr[i].data[j].mFId + '</span></li>' +
+              '<li>------<span>' + newArr[i].data[j].faultContent + '</span></li>' +
+              '</ul>');
+          }
+        };
+        $('#header').children('form').children('input').attr('placeholder', newArr[0].data[0].machineNumber);
+        // $('#header').append('<button  onclick="jzm.num()" style="position:absolute; z-index:99;">搜索</button>')
+      }
+      // () ?   : (function () {
+
+      // })();
+    })
+    .fail(function (err) {
       jzm.Error(err);
-  })
+    })
 };
-jzm.detailSold = function(startTimes,endTimes){
+jzm.detailSold = function (startTimes, endTimes) {
+  $('#loadingBox').show();
+  // $('#loadingBox').loading({
+  //   loadingWidth:120,
+  // 	title:'',
+  // 	name:'test',
+  // 	discription:'拼命加载中',
+  // 	direction:'column',
+  // 	type:'origin',
+  // 	// originBg:'#71EA71',
+  // 	originDivWidth:10,
+  // 	originDivHeight:10,
+  // 	originWidth:6,
+  // 	originHeight:6,
+  // 	smallLoading:false,
+  // 	loadingMaskBg:'rgba(0,0,0,0.2)'
+  // });
   $.ajax({
-    url:httpJoin + "product_detail_sold",
-    type:"POST",
-    async:true,
-    dataType:"JSON",
-    data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),startTime:startTimes||null,endTime:endTimes||null,machineNumber:jzm.getQueryString('num')}
+    url: httpJoin + "product_detail_sold",
+    type: "POST",
+    async: true,
+    dataType: "JSON",
+    // idKey
+    // data:{userToken:jzm.uncompilestr(_self.token),url:jzm.uncompilestr(_self.uri),userId:jzm.uncompilestr(_self.id),startTime:startTimes||null,endTime:endTimes||null,machineNumber:jzm.getQueryString('num')}
+    data: { idKey: _self.idKey, url: jzm.uncompilestr(_self.uri), startTime: startTimes || null, endTime: endTimes || null, machineNumber: jzm.getQueryString('num'), loginType: _self.loginType }
   })
-   .done(function(r){
-    // console.log(r)
-    // console.log(r.statusCode.status)
-     if(stateCode.test(r.statusCode.status)){
+    .done(function (r) {
+      console.log(r)
+      // console.log(r.statusCode.status)
+      if (stateCode.test(r.statusCode.status)) {
         // jzm.Error(r)
         // console.log(r)
-      }else if(r.statusCode.status==200){
+      } else if (r.statusCode.status == 200) {
         // console.log('jzm.detailSold'+r.statusCode)
-        //  window.location.href = './fake_html/fake-index.html?status='+r.statusCode.status+'&msg='+r.statusCode.msg;
-       }else{
+        window.location.href = './fake_html/fake-index.html?status=' + r.statusCode.status + '&msg=' + r.statusCode.msg;
+      } else {
         // console.log(r)
-        var str="",productSold="";
+        var str = "", productSold = "";
         // for(){}
-         str += '<div><a><ul><li><span></span><div>'+ r.adminName +'  /  No.'+r.machineNumber+'</div><div>'+r.addrDesc+'</div></li>'+
-                   '<li><div style="width:50%;"><div id="information-left"></div><span>'+r.countNum+'</span><span>销售杯数</span></div><div style="width:50%;"><span>'+r.payMoney+'</span><span>销售总额</span></div></li>'+
-                '</ul></a></div>';
-       }
-       if(r.productSold!=null){
-        for(var i=0;i<r.productSold.length;i++){
-          num+=r.productSold[i].countNum
-          if(r.productSold[r.productSold.length-1].countNum==r.productSold[i].countNum){
-            productSold+='<li class="last"><div><div>'+r.productSold[i].countNum+'</div><div>'+r.productSold[i].productName+'</div></div></li>'
-          }else if(r.productSold[0].countNum==r.productSold[i].countNum){
-            productSold+='<li class="first"><div><div>'+r.productSold[i].countNum+'</div><div>'+r.productSold[i].productName+'</div></div></li>'
-          }else{
-             productSold+='<li class="middle"><div><div>'+r.productSold[i].countNum+'</div><div>'+r.productSold[i].productName+'</div></div></li>'
+        str += '<div><a><ul><li><span></span><div>' + r.adminName + '  /  No.' + r.machineNumber + '</div><div>' + r.addrDesc + '</div></li>' +
+          '<li><div style="width:50%;"><div id="information-left"></div><span>' + r.countNum + '</span><span>销售杯数</span></div><div style="width:50%;"><span>' + r.payMoney + '</span><span>销售总额</span></div></li>' +
+          '</ul></a></div>';
+      }
+      if (r.productSold != null) {
+        for (var i = 0; i < r.productSold.length; i++) {
+          num += r.productSold[i].countNum
+          if (r.productSold[r.productSold.length - 1].countNum == r.productSold[i].countNum) {
+            productSold += '<li class="last"><div><div>' + r.productSold[i].countNum + '</div><div>' + r.productSold[i].productName + '</div></div></li>'
+          } else if (r.productSold[0].countNum == r.productSold[i].countNum) {
+            productSold += '<li class="first"><div><div>' + r.productSold[i].countNum + '</div><div>' + r.productSold[i].productName + '</div></div></li>'
+          } else {
+            productSold += '<li class="middle"><div><div>' + r.productSold[i].countNum + '</div><div>' + r.productSold[i].productName + '</div></div></li>'
           }
-         }
-       }
-      // console.log(num)
-     $('#information-list').html(str||"无")
-     $('#information').html(productSold)
-  })
-  .fail(function(err) {
-  	console.log(err)
+        }
+      }
+      console.log(num)
+      $('#information-list').html(str || "无")
+      $('#information').html(productSold);
+      // removeLoading('test');
+      $('#loadingBox').hide();
+    })
+    .fail(function (err) {
+      console.log(err)
       // jzm.Error(err);
-  })
+    })
 }

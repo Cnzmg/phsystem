@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <meta http-equiv="Expires" content="0" />
+
+    <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/mobileSelect.css">
+    <link rel="stylesheet" href="../css/fake.css">
+    <title>运维中心</title>
+</head>
+
+<body>
+
+    <div class="loading_box" id="loadingBox" style="display: none;">
+        <div class="load-container load8">
+            <div class="loader">Loading...</div>
+            <!-- <span>加载中...</span> -->
+        </div>
+        <!-- <div class="weui-loadmore">
+                        <i class="weui-loading"></i>
+                        <span class="weui-loadmore__tips">正在加载</span>
+                    </div> -->
+    </div>
+    <div class="container-fluid" style="margin-top:1rem;">
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="javascript:jzm.search(1)" class="search">
+                    <label id="search">
+                        <span>
+
+                        </span>
+                        <input type="search" placeholder="输入商户名或商户ID快速查找">
+                        <!-- 	<button id="search-btn">
+                                        
+                                    </button> -->
+                    </label>
+                </form>
+                <div class="header-date">
+                    <div class="date">
+                        <ul>
+                            <li>
+                                <span>
+                                    起始日期
+                                </span>
+                                <div>
+                                    <div id="startTime" style="cursor: pointer;"></div>
+                                    <span></span>
+                                </div>
+                                <!-- <form action="JavaScript:dateSearch()">
+                                            <input type="text" id="startTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(2)">
+                                            <span></span>
+                                        </form> -->
+                            </li>
+                            <li>
+                                <span>
+                                    截止日期
+                                </span>
+                                <div>
+                                    <div id="endTime" style="cursor: pointer;"></div>
+                                    <span></span>
+                                </div>
+                                <!-- <form action="JavaScript:dateSearch()">
+                                            <input type="text" id="endTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(2)">
+                                            <span></span>
+                                        </form> -->
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="date-btn" onclick="commercial_Search()">
+                        <button class="all index">全部</button>
+                        <button class="this-m">本月</button>
+                        <button class="this-k">本周</button>
+                        <button class="today">今天</button>
+                    </div>
+                </div>
+                <div class="list">
+                    <div id="shop-list">
+                        <div><a href="./commercial.html?val=40&amp;name=ShopManager&amp;machineCount=23&amp;payCount=2260&amp;payMoney=12972.95">
+                                <ul>
+                                    <li><span></span>
+                                        <div>ShopManager</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span id="machineCount-num">230</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>22860</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>129872.95</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="commercial-footer-data">
+                <ul class="commercial-footer-data-box" id="commercial">
+                    <li class="commercial-best first">
+                        <div><a href="./fake-machine-sales-information.html">
+                                <div>9820</div>
+                                <div>No.100016</div>
+                            </a></div>
+                    </li>
+                    <li class="commercial-best middle">
+                        <div><a href="./fake-machine-sales-information.html">
+                                <div>4638</div>
+                                <div>No.100034</div>
+                            </a></div>
+                    </li>
+                    <li class="commercial-best middle">
+                        <div><a href="./fake-machine-sales-information.html">
+                                <div>3658</div>
+                                <div>No.100013</div>
+                            </a></div>
+                    </li>
+                    <li class="commercial-best last">
+                        <div><a href="./fake-machine-sales-information.html">
+                                <div>2888</div>
+                                <div>No.100032</div>
+                            </a></div>
+                    </li>
+                    <li class="commercial-best last">
+                        <div><a href="./fake-machine-sales-information.html">
+                                <div>1888</div>
+                                <div>No.100039</div>
+                            </a></div>
+                    </li>
+                    <li class="commercial-best last">
+                        <div><a href="./fake-machine-sales-information.html">
+                                <div>888</div>
+                                <div>No.100026</div>
+                            </a></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 底部更多数据的箭头 -->
+    <footer style="display: none;">
+        <div></div>
+    </footer>
+    <div class="fake">	
+        以上是演示数据
+    </div>
+</body>
+
+</html>

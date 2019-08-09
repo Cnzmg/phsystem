@@ -44,9 +44,20 @@
 	content:"";
 }
 .list-title>li{
-	width:25%;
+	width:40%;
 	height:50px;
 	float: left;
+	padding-right:5%;
+	font-size:12px;
+}
+.list-title>li:nth-of-type(2){
+	width:20%;
+}
+.list-title>li:nth-of-type(3){
+	width:20%;
+}
+.list-title>li:nth-of-type(4){
+	width:20%;
 }
 #list>div:nth-of-type(odd){
 	background-color:#DCEBFC;
@@ -77,11 +88,26 @@
 	clear:both;
 	content:'';
 }
+#list>div>ul>li>span{
+	display:block;
+}
 #list>div>ul>li:first-of-type>span{
 	float: left;
-	width:25%;
+	width:40%;
 	height:20px;
 	position: relative;
+	padding-right:5%;
+	/* word-wrap:break-word;
+	word-break:break-all; */
+}
+#list>div>ul>li:first-of-type>span:nth-of-type(2){
+	width:20%;
+}
+#list>div>ul>li:first-of-type>span:nth-of-type(3){
+	width:20%;
+}
+#list>div>ul>li:first-of-type>span:nth-of-type(4){
+	width:20%;
 }
 #list>div>ul>ul>li>span:last-of-type{
 	margin:0;
@@ -123,7 +149,7 @@
 }
 /*分页按钮样式*/
 .pading{
-    margin: 0 auto;
+    margin: 10px auto;
     width: 95%;
     height: 38px;
     /*line-height: 3rem;*/
@@ -134,7 +160,10 @@
 .pading>button{
 	/*width:30px;*/
 	/*height:30px;*/
+	background-color:#fff;
 	padding:5px 1px;
+	border:none;
+	outline:none;
 }
 /*上一页*/
 .pading>button:nth-of-type(1) {
@@ -156,14 +185,19 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%);
-    cursor: pointer;
+	cursor: pointer;
  }
  .btn-num>button{
  	display:inline-block;
 	padding:5px 10px;
-	margin: 0 1px; 
+	margin: 0 1px;
+	background-color:#fff;
+	color:#000;
+	border:none;
+	outline:none;
  }
- .btn{
- 	background:#ccc;
- }
+ .btn-num>.btn{
+ 	background-color:#DCEBFC;
+	color:#fff;
+}
 

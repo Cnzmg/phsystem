@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <meta http-equiv="Expires" content="0" />
+
+    <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/mobileSelect.css">
+    <link rel="stylesheet" href="../css/fake.css">
+    <title>运维中心</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="message">
+                <div id="tag">
+                    <li><span>充值人数:<span>15000</span></span></li>
+                    <li><span>充值总额:<span>88888888</span></span></li>
+                </div>
+                <!-- <label id="search">
+                    <input type="text" value="" placeholder="请输入商户名或商户ID">
+                </label> -->
+            </div>
+            <div class="col-lg-12">
+                <form action="javascript:jzm.search()" class="search">
+                    <label id="search">
+                        <span>
+
+                        </span>
+                        <input type="search" placeholder="输入商户名或商户ID快速查找">
+                        <!-- 	<button id="search-btn">
+                            
+                        </button> -->
+                    </label>
+                </form>
+                <div class="header-date">
+                    <div class="date">
+                        <ul>
+                            <li>
+                                <span>
+                                    起始日期
+                                </span>
+                                <div>
+                                    <div id="startTime" style="cursor: pointer;"></div>
+                                    <span></span>
+                                </div>
+                                <!-- <form action="JavaScript:dateSearch()">
+                                <input type="text" id="startTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(0)">
+                                    
+                            </form> -->
+                            </li>
+                            <li>
+                                <span>
+                                    截止日期
+                                </span>
+                                <div>
+                                    <div id="endTime" style="cursor: pointer;"></div>
+                                    <span></span>
+                                </div>
+                                <!-- <form action="JavaScript:dateSearch()"> -->
+                                <!-- <input type="text" id="endTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(0)"> -->
+
+                                <!-- </form> -->
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="date-btn" onclick="date_Search()">
+                        <button class="all index">全部</button>
+                        <button class="this-m">本月</button>
+                        <button class="this-k">本周</button>
+                        <button class="today">今天</button>
+                    </div>
+                </div>
+                <div class="list">
+                    <div id="shop-list">
+                        <div>
+                            <a href="./fake-commercial.html">
+                                <ul>
+                                    <li><span></span>
+                                        <div>ShopManager</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span>230</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>22460</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>129720.95</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                        <div><a href="">
+                                <ul>
+                                    <li><span></span>
+                                        <div>admin</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span>150</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>8000</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>888888</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                        <div><a href="">
+                                <ul>
+                                    <li><span></span>
+                                        <div>coffeewoo001</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span>500</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>3287</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>89159</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                        <div><a href="">
+                                <ul>
+                                    <li><span></span>
+                                        <div>coffeewoo005</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span>400</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>2230</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>87264</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                        <div><a href="">
+                                <ul>
+                                    <li><span></span>
+                                        <div>coffeewoo007</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span>200</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>2843</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>334888</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                        <div><a href="">
+                                <ul>
+                                    <li><span></span>
+                                        <div>coffeewoo008</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span>488</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>5985</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>536882</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                        <div><a href="">
+                                <ul>
+                                    <li><span></span>
+                                        <div>coffeewoofshy</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span>188</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>1883</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>53888</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                        <div><a href="">
+                                <ul>
+                                    <li><span></span>
+                                        <div>coffeewoofsjhydkn</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span>154</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>885</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>28800</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                        <div><a href="">
+                                <ul>
+                                    <li><span></span>
+                                        <div>coffeewoozscjdkn</div>
+                                    </li>
+                                    <li>
+                                        <div style="width:33.3%;"><span>188</span><span>机器数量</span></div>
+                                        <div style="width:33.3%;">
+                                            <div id="machineCount-left"></div><span>5780</span><span>销售杯数</span>
+                                        </div>
+                                        <div style="width:33.3%;"><span>40303</span><span>销售总额</span></div>
+                                    </li>
+                                </ul>
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+            <div id="machine-info">
+                <!-- <a href="./atack.html">
+                    机器信息
+                    <span></span>
+                </a> -->
+            </div>
+        </div>
+    </div>
+    <!-- 底部更多数据的箭头 -->
+    <footer style="display: none;">
+        <div></div>
+    </footer>
+    <div class="fake">	
+		以上是演示数据
+	</div>
+</body>
+
+</html>

@@ -38,7 +38,7 @@
 	/*position:absolute;*/
 	padding-right:1px;
 }
-.date>ul>li>form{
+.date>ul>li>div{
 	display:inline-block;
 	width:9.3rem;
 	height:2.4rem;
@@ -48,14 +48,14 @@
 	transform:translate(0,-50%);
 	border: 1px solid #65A9FF;
 }
-.date>ul>li>form>input{
+.date>ul>li>div>div{
 	width:7rem;
 	height:2.2rem;
 	line-height:2.2rem;
 	position:absolute;
 	border:none;
 }
-.date>ul>li>form>span{
+.date>ul>li>div>span{
 	display:block;
 	width:1.6rem;
 	height:1.6rem;
@@ -195,7 +195,7 @@
 	opacity:0.7;
 	font-family:SoureHanSansCN-Medium;
 }
-.content{
+.content1{
 	width:100%;
 	height:15rem;
 	margin:2.5rem auto 2rem auto;

@@ -13,9 +13,11 @@
 	<link rel="stylesheet" href="asset/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./css/base.css">
 	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./css/mobileSelect.css">
   	<script src="asset/js/jquery-3.2.1.min.js"></script>
   	<script type="text/javascript" src="asset/js/config.js"></script>
 	<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="js/mobileSelect.js"></script>
 	<script type="text/javascript" src="js/ui.js"></script>
   <title>运维中心</title>
 </head>
@@ -50,19 +52,27 @@
 							<span>
 								起始日期
 							</span>
-							<form action="JavaScript:dateSearch()">
-								<input type="text" id="startTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(0)">
+							<div>
+								<div id="startTime"></div>
 								<span></span>
-							</form>
+							</div>
+							<!-- <form action="JavaScript:dateSearch()">
+								<input type="text" id="startTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(0)">
+								
+							</form> -->
 						</li>
 						<li>
 							<span>
 								截止日期
 							</span>
-							<form action="JavaScript:dateSearch()">
-								<input type="text" id="endTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(0)">
+							<div>
+								<div id="endTime"></div>
 								<span></span>
-							</form>
+							</div>
+							<!-- <form action="JavaScript:dateSearch()"> -->
+								<!-- <input type="text" id="endTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" onblur="dateSearch(0)"> -->
+								
+							<!-- </form> -->
 						</li>
 					</ul>
 				</div>
@@ -94,6 +104,7 @@
 		<div></div>
 	</footer>
 	<script type="text/javascript" src="js/base.js"></script>
+	<script type="text/javascript" src="js/date.js"></script>
 	<script type="text/javascript">
 			// alert('首页')
 			jzm.paraMessage('toList');
